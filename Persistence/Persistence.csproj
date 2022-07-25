@@ -44,5 +44,11 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SBeregovoy.SoftwareDevelop.Domain\SBeregovoy.SoftwareDevelop.Domain.csproj">
+      <Project>{c92710fa-5fe9-4089-8b1d-2c3eab2c016a}</Project>
+      <Name>SBeregovoy.SoftwareDevelop.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

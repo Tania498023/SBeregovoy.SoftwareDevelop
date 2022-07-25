@@ -51,6 +51,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Persistence\Persistence.csproj">
+      <Project>{27766cf7-d3cd-4aec-a57f-835e5334a08b}</Project>
+      <Name>Persistence</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SBeregovoy.SoftwareDevelop.Domain\SBeregovoy.SoftwareDevelop.Domain.csproj">
       <Project>{C92710FA-5FE9-4089-8B1D-2C3EAB2C016A}</Project>
       <Name>SBeregovoy.SoftwareDevelop.Domain</Name>
