@@ -1,0 +1,6 @@
+C:\Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\SBeregovoy.SoftwareDevelop.Domain\bin\Debug\SBeregovoy.SoftwareDevelop.Domain.dll
+C:\Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\SBeregovoy.SoftwareDevelop.Domain\bin\Debug\SBeregovoy.SoftwareDevelop.Domain.pdb
+C:\Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\SBeregovoy.SoftwareDevelop.Domain\obj\Debug\SBeregovoy.SoftwareDevelop.Domain.csproj.AssemblyReference.cache
+C:\Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\SBeregovoy.SoftwareDevelop.Domain\obj\Debug\SBeregovoy.SoftwareDevelop.Domain.csproj.CoreCompileInputs.cache
+C:\Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\SBeregovoy.SoftwareDevelop.Domain\obj\Debug\SBeregovoy.SoftwareDevelop.Domain.dll
+C:\Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\SBeregovoy.SoftwareDevelop.Domain\obj\Debug\SBeregovoy.SoftwareDevelop.Domain.pdb
