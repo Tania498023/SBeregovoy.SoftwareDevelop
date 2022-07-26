@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace SBeregovoy.SoftwareDevelop.Domain
 {
-    internal class Settings
+    public static class Settings
     {
+        /// <summary>
+        /// Количество рабочих часов в месяце
+        /// </summary>
+        public const byte WorkHoursInMonth = 160;
+        public const byte WorkHourInDay = 8;
     }
 }

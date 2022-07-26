@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace SBeregovoy.SoftwareDevelop.Domain
 {
-    internal class Staff: Person
+    internal class Employee : Staff
     {
+        public Employee(string name, List<TimeRecord> timeRecords) : base(name, 120000, timeRecords)
+        {
+
+        }
     }
 }
