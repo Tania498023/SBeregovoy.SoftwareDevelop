@@ -4,3 +4,6 @@ C:\Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\Persistence\obj\Debug\Per
 C:\Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\Persistence\obj\Debug\Persistence.csproj.CoreCompileInputs.cache
 C:\Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\Persistence\obj\Debug\SBeregovoy.SoftwareDevelop.Persistence.dll
 C:\Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\Persistence\obj\Debug\SBeregovoy.SoftwareDevelop.Persistence.pdb
+C:\Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\Persistence\bin\Debug\SBeregovoy.SoftwareDevelop.Domain.dll
+C:\Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\Persistence\bin\Debug\SBeregovoy.SoftwareDevelop.Domain.pdb
+C:\Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\Persistence\obj\Debug\Persistence.csproj.CopyComplete

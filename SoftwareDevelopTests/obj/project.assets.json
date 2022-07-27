@@ -885,6 +885,15 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XDocument.dll": {}
         }
+      },
+      "SBeregovoy.SoftwareDevelop.Domain/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/SBeregovoy.SoftwareDevelop.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SBeregovoy.SoftwareDevelop.Domain.dll": {}
+        }
       }
     }
   },
@@ -3833,6 +3842,11 @@
         "system.xml.xdocument.4.0.11.nupkg.sha512",
         "system.xml.xdocument.nuspec"
       ]
+    },
+    "SBeregovoy.SoftwareDevelop.Domain/1.0.0": {
+      "type": "project",
+      "path": "../SBeregovoy.SoftwareDevelop.Domain/SBeregovoy.SoftwareDevelop.Domain.csproj",
+      "msbuildProject": "../SBeregovoy.SoftwareDevelop.Domain/SBeregovoy.SoftwareDevelop.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -3841,6 +3855,7 @@
       "NUnit >= 3.13.3",
       "NUnit.Analyzers >= 3.3.0",
       "NUnit3TestAdapter >= 4.2.1",
+      "SBeregovoy.SoftwareDevelop.Domain >= 1.0.0",
       "coverlet.collector >= 3.1.2"
     ]
   },
@@ -3874,7 +3889,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Tanya\\source\\repos\\SBeregovoy.SoftwareDevelop\\SBeregovoy.SoftwareDevelop.Domain\\SBeregovoy.SoftwareDevelop.Domain.csproj": {
+              "projectPath": "C:\\Users\\Tanya\\source\\repos\\SBeregovoy.SoftwareDevelop\\SBeregovoy.SoftwareDevelop.Domain\\SBeregovoy.SoftwareDevelop.Domain.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

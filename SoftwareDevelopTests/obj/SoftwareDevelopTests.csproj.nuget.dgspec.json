@@ -4,6 +4,21 @@
     "C:\\Users\\Tanya\\source\\repos\\SBeregovoy.SoftwareDevelop\\SoftwareDevelopTests\\SoftwareDevelopTests.csproj": {}
   },
   "projects": {
+    "C:\\Users\\Tanya\\source\\repos\\SBeregovoy.SoftwareDevelop\\SBeregovoy.SoftwareDevelop.Domain\\SBeregovoy.SoftwareDevelop.Domain.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Tanya\\source\\repos\\SBeregovoy.SoftwareDevelop\\SBeregovoy.SoftwareDevelop.Domain\\SBeregovoy.SoftwareDevelop.Domain.csproj",
+        "projectName": "SBeregovoy.SoftwareDevelop.Domain",
+        "projectPath": "C:\\Users\\Tanya\\source\\repos\\SBeregovoy.SoftwareDevelop\\SBeregovoy.SoftwareDevelop.Domain\\SBeregovoy.SoftwareDevelop.Domain.csproj",
+        "frameworks": {
+          "net48": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net48": {}
+      }
+    },
     "C:\\Users\\Tanya\\source\\repos\\SBeregovoy.SoftwareDevelop\\SoftwareDevelopTests\\SoftwareDevelopTests.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -30,7 +45,11 @@
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\Tanya\\source\\repos\\SBeregovoy.SoftwareDevelop\\SBeregovoy.SoftwareDevelop.Domain\\SBeregovoy.SoftwareDevelop.Domain.csproj": {
+                "projectPath": "C:\\Users\\Tanya\\source\\repos\\SBeregovoy.SoftwareDevelop\\SBeregovoy.SoftwareDevelop.Domain\\SBeregovoy.SoftwareDevelop.Domain.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
