@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopTests
 {
-    public class Tests
+    public class PersonsTests
     {
         [SetUp]
         public void Setup()
@@ -18,8 +18,8 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopTests
             //10000+11000+8750=29750
             Manager manager = new Manager("test", new List<TimeRecord>() {
                 new TimeRecord(DateTime.Now.AddDays(-3),"test",8,"test message"),
-                new TimeRecord(DateTime.Now.AddDays(-3),"test",9,"test message"),
-                new TimeRecord(DateTime.Now.AddDays(-3),"test",7,"test message"),
+                new TimeRecord(DateTime.Now.AddDays(-2),"test",9,"test message"),
+                new TimeRecord(DateTime.Now.AddDays(-1),"test",7,"test message"),
             });
 
                Assert.IsTrue(manager.TotalPay == 29750);
@@ -30,7 +30,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopTests
             //10000
             Manager manager = new Manager("test", new List<TimeRecord>() {
                 new TimeRecord(DateTime.Now.AddDays(-3),"test",8,"test message"),
-                
+
             });
 
             Assert.IsTrue(manager.TotalPay == 10000);

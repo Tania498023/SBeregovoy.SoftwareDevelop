@@ -12,8 +12,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
     {
         static void Main(string[] args)
         {
-          
-
+            
         }
     }
 }

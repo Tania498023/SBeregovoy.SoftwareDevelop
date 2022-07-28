@@ -49,6 +49,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Data\Frelanser.csv" />
+    <None Include="Data\Employee.csv" />
+    <None Include="Data\User.csv" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Persistence\Persistence.csproj">
@@ -59,6 +62,9 @@
       <Project>{C92710FA-5FE9-4089-8B1D-2C3EAB2C016A}</Project>
       <Name>SBeregovoy.SoftwareDevelop.Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Data\Manager.csv" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

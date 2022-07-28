@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SBeregovoy.SoftwareDevelop.Persistence
 {
-    public class Class1
+    internal class FileRepository
     {
     }
 }
