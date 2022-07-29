@@ -12,6 +12,7 @@
           "NUnit": "3.13.3",
           "NUnit.Analyzers": "3.3.0",
           "NUnit3TestAdapter": "4.2.1",
+          "Persistence": "1.0.0",
           "SBeregovoy.SoftwareDevelop.Domain": "1.0.0",
           "coverlet.collector": "3.1.2"
         },
@@ -653,6 +654,14 @@
           "System.Xml.ReaderWriter": "4.0.11"
         }
       },
+      "Persistence/1.0.0": {
+        "dependencies": {
+          "SBeregovoy.SoftwareDevelop.Domain": "1.0.0"
+        },
+        "runtime": {
+          "SBeregovoy.SoftwareDevelop.Persistence.dll": {}
+        }
+      },
       "SBeregovoy.SoftwareDevelop.Domain/1.0.0": {
         "runtime": {
           "SBeregovoy.SoftwareDevelop.Domain.dll": {}
@@ -994,6 +1003,11 @@
       "sha512": "sha512-Mk2mKmPi0nWaoiYeotq1dgeNK1fqWh61+EK+w4Wu8SWuTYLzpUnschb59bJtGywaPq7SmTuPf44wrXRwbIrukg==",
       "path": "system.xml.xdocument/4.0.11",
       "hashPath": "system.xml.xdocument.4.0.11.nupkg.sha512"
+    },
+    "Persistence/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "SBeregovoy.SoftwareDevelop.Domain/1.0.0": {
       "type": "project",

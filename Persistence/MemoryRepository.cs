@@ -15,24 +15,24 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
         #region Fake Data
         private List<TimeRecord> emloyees = new List<TimeRecord>()
         {
-                new TimeRecord(DateTime.Now.AddDays(-3),"Иванов",8,"test message 1"),
-                new TimeRecord(DateTime.Now.AddDays(-3),"Васильев",8,"test message 2"),
-                new TimeRecord(DateTime.Now.AddDays(-2),"Иванов",10,"test message 3"),
-                new TimeRecord(DateTime.Now.AddDays(-2),"Васильев",8,"test message 4"),
+                new TimeRecord(DateTime.Now.Date.AddDays(-3),"Иванов",8,"test message 1"),
+                new TimeRecord(DateTime.Now.Date.AddDays(-3),"Васильев",8,"test message 2"),
+                new TimeRecord(DateTime.Now.Date.AddDays(-2),"Иванов",10,"test message 3"),
+                new TimeRecord(DateTime.Now.Date.AddDays(-2),"Васильев",8,"test message 4"),
         };
 
         private List<TimeRecord> frilanser = new List<TimeRecord>()
         {
-                new TimeRecord(DateTime.Now.AddDays(-3),"Смит",8,"test message 1"),
-                new TimeRecord(DateTime.Now.AddDays(-3),"Бонд",8,"test message 2"),
-                new TimeRecord(DateTime.Now.AddDays(-2),"Смит",10,"test message 3"),
-                new TimeRecord(DateTime.Now.AddDays(-2),"Бонд",8,"test message 4"),
+                new TimeRecord(DateTime.Now.Date.AddDays(-3),"Смит",8,"test message 1"),
+                new TimeRecord(DateTime.Now.Date.AddDays(-3),"Бонд",8,"test message 2"),
+                new TimeRecord(DateTime.Now.Date.AddDays(-2),"Смит",10,"test message 3"),
+                new TimeRecord(DateTime.Now.Date.AddDays(-2),"Бонд",8,"test message 4"),
 
         };
         private List<TimeRecord> manager = new List<TimeRecord>()
         {
-                new TimeRecord(DateTime.Now.AddDays(-3),"Береговой",8,"test message 1"),
-                new TimeRecord(DateTime.Now.AddDays(-2),"Береговой",10,"test message 2"),
+                new TimeRecord(DateTime.Now.Date.AddDays(-3),"Береговой",8,"test message 1"),
+                new TimeRecord(DateTime.Now.Date.AddDays(-2),"Береговой",10,"test message 2"),
         };
         private List<User> users = new List<User>()
              {
@@ -74,14 +74,14 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
             }
             if(from == null)
             {
-                from = DateTime.Now.AddYears(-100);
+                from = DateTime.Now.Date.AddYears(-100);
             }
             if(to == null)
             {
-                to = DateTime.Now;
+                to = DateTime.Now.Date;
             }
 
-            return records.Where(x=>from.Value >= x.Date && x.Date <= to).ToList();
+            return records.Where(x=>from.Value <= x.Date && x.Date <= to).ToList();
         }
         public List<TimeRecord> ReportGetByUser(string userName, UserRole userRole, DateTime? from = null, DateTime? to = null)
         {

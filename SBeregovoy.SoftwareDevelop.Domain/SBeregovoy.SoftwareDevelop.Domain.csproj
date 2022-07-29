@@ -51,6 +51,7 @@
     <Compile Include="TimeRecord.cs" />
     <Compile Include="Persons\User.cs" />
     <Compile Include="Persons\UserRole.cs" />
+    <Compile Include="TimeRecordComparer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

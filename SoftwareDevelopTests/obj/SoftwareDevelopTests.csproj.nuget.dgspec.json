@@ -4,6 +4,25 @@
     "C:\\Users\\Tanya\\source\\repos\\SBeregovoy.SoftwareDevelop\\SoftwareDevelopTests\\SoftwareDevelopTests.csproj": {}
   },
   "projects": {
+    "C:\\Users\\Tanya\\source\\repos\\SBeregovoy.SoftwareDevelop\\Persistence\\Persistence.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Tanya\\source\\repos\\SBeregovoy.SoftwareDevelop\\Persistence\\Persistence.csproj",
+        "projectName": "Persistence",
+        "projectPath": "C:\\Users\\Tanya\\source\\repos\\SBeregovoy.SoftwareDevelop\\Persistence\\Persistence.csproj",
+        "frameworks": {
+          "net48": {
+            "projectReferences": {
+              "C:\\Users\\Tanya\\source\\repos\\SBeregovoy.SoftwareDevelop\\SBeregovoy.SoftwareDevelop.Domain\\SBeregovoy.SoftwareDevelop.Domain.csproj": {
+                "projectPath": "C:\\Users\\Tanya\\source\\repos\\SBeregovoy.SoftwareDevelop\\SBeregovoy.SoftwareDevelop.Domain\\SBeregovoy.SoftwareDevelop.Domain.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net48": {}
+      }
+    },
     "C:\\Users\\Tanya\\source\\repos\\SBeregovoy.SoftwareDevelop\\SBeregovoy.SoftwareDevelop.Domain\\SBeregovoy.SoftwareDevelop.Domain.csproj": {
       "restore": {
         "projectUniqueName": "C:\\Users\\Tanya\\source\\repos\\SBeregovoy.SoftwareDevelop\\SBeregovoy.SoftwareDevelop.Domain\\SBeregovoy.SoftwareDevelop.Domain.csproj",
@@ -46,6 +65,9 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
+              "C:\\Users\\Tanya\\source\\repos\\SBeregovoy.SoftwareDevelop\\Persistence\\Persistence.csproj": {
+                "projectPath": "C:\\Users\\Tanya\\source\\repos\\SBeregovoy.SoftwareDevelop\\Persistence\\Persistence.csproj"
+              },
               "C:\\Users\\Tanya\\source\\repos\\SBeregovoy.SoftwareDevelop\\SBeregovoy.SoftwareDevelop.Domain\\SBeregovoy.SoftwareDevelop.Domain.csproj": {
                 "projectPath": "C:\\Users\\Tanya\\source\\repos\\SBeregovoy.SoftwareDevelop\\SBeregovoy.SoftwareDevelop.Domain\\SBeregovoy.SoftwareDevelop.Domain.csproj"
               }

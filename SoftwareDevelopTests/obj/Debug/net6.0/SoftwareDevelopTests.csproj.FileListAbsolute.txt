@@ -99,3 +99,5 @@ C:\Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\SoftwareDevelopTests\obj\
 C:\Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\SoftwareDevelopTests\obj\Debug\net6.0\ref\SBeregovoy.SoftwareDevelop.SoftwareDevelopTests.dll
 C:\Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\SoftwareDevelopTests\bin\Debug\net6.0\SBeregovoy.SoftwareDevelop.Domain.dll
 C:\Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\SoftwareDevelopTests\bin\Debug\net6.0\SBeregovoy.SoftwareDevelop.Domain.pdb
+C:\Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\SoftwareDevelopTests\bin\Debug\net6.0\SBeregovoy.SoftwareDevelop.Persistence.dll
+C:\Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\SoftwareDevelopTests\bin\Debug\net6.0\SBeregovoy.SoftwareDevelop.Persistence.pdb
