@@ -127,8 +127,8 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
             }
             return null;
         }
-         public List<User> Users()
-         {  
+         public List<User> Users()//возвращаем  List<User>
+        {  
             return users;
             
          }

@@ -12,7 +12,17 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
     {
         static void Main(string[] args)
         {
-            
+            var userfill = new FileRepository();//создаем экземпляры для возможности вызова метода FillFileUser
+            var userreturn = new MemoryRepository();//создаем экземпляры для возможности вызова метода Users
+            userfill.FillFileUser(userreturn.Users());//вызываем методы FillFileUser и Users
+
+            var employeefill = new FileRepository();//создаем экземпляры для возможности вызова метода FillFileEmployee
+            var employeereturn = new MemoryRepository();//создаем экземпляры для возможности вызова метода Employees
+            employeefill.FillFileEmployee(employeereturn.Employees());//вызываем методы FillFileEmployee и Employees
+
+
+
         }
     }
 }
+//дописать на три коллекции
