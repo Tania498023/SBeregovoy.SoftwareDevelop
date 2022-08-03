@@ -18,7 +18,7 @@ namespace SBeregovoy.SoftwareDevelop.Domain
                 totalPay += Settings.payPerHour * timeRecord.Hours;
             }
 
-            return;//доделать зп
+            TotalPay = totalPay;
             
 
         }
