@@ -13,5 +13,6 @@ namespace SBeregovoy.SoftwareDevelop.Domain
         /// </summary>
         public const byte WorkHoursInMonth = 160;
         public const byte WorkHourInDay = 8;
+        public const decimal payPerHour = 1000;
     }
 }

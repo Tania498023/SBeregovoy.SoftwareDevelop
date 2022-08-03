@@ -35,5 +35,17 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopTests
 
             Assert.IsTrue(manager.TotalPay == 10000);
         }
+        //[Test]
+        //public void FrilanserTotalPay()
+        //{
+        //    //
+        //    Frilanser frilanser = new Frilanser("test", new List<TimeRecord>() {
+        //        new TimeRecord(DateTime.Now.Date.AddDays(-3),"test",8,"test message"),
+        //        new TimeRecord(DateTime.Now.Date.AddDays(-2),"test",9,"test message"),
+        //        new TimeRecord(DateTime.Now.Date.AddDays(-1),"test",7,"test message"),
+        //    });
+
+        //    Assert.IsTrue(frilanser.TotalPay == 24000);
+        //}
     }
 }

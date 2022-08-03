@@ -34,8 +34,32 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
 
             }
 
-        }со
+        }
+        public void FillFileFrilanser(List<TimeRecord> timeRecords)
+        {
+
+            string frilanserpath = @"C: \Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\SoftwareDevelopConsole\Data\Frilanser.csv";
+            foreach (TimeRecord frilanser in timeRecords)//перебираем коллекцию и выбираем из нее элементы
+            {
+                string frilanserstr = frilanser.Date + "," + frilanser.Name + frilanser.Hours + frilanser.Message + Environment.NewLine;//создаем строку с разделительными символами и переносом строки
+                File.AppendAllText(frilanserpath, frilanserstr);//записываем указанную строку 
+
+            }
+
+        }
+        public void FillFileManager(List<TimeRecord> timeRecords)
+        {
+
+            string managerpath = @"C: \Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\SoftwareDevelopConsole\Data\Manager.csv";
+            foreach (TimeRecord manager in timeRecords)//перебираем коллекцию и выбираем из нее элементы
+            {
+                string managerstr = manager.Date + "," + manager.Name + manager.Hours + manager.Message + Environment.NewLine;//создаем строку с разделительными символами и переносом строки
+                File.AppendAllText(managerpath, managerstr);//записываем указанную строку 
+
+            }
+
+        }
     }
 }
-//сделать аналогично на 2 коллекции
+
 

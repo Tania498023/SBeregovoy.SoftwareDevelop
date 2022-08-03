@@ -49,7 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Data\Frelanser.csv" />
+    <None Include="Data\Frilanser.csv" />
     <None Include="Data\Employee.csv" />
     <None Include="Data\User.csv" />
   </ItemGroup>

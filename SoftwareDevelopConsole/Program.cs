@@ -20,9 +20,13 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             var employeereturn = new MemoryRepository();//создаем экземпляры для возможности вызова метода Employees
             employeefill.FillFileEmployee(employeereturn.Employees());//вызываем методы FillFileEmployee и Employees
 
+            var frilanserfill = new FileRepository();//создаем экземпляры для возможности вызова метода FillFileFrilanser
+            var frilanserreturn = new MemoryRepository();//создаем экземпляры для возможности вызова метода Frilanser
+            frilanserfill.FillFileFrilanser(frilanserreturn.Frilanser());//вызываем методы FillFileFrilanser и Frilanser
 
-
+            
+            
         }
     }
 }
-//дописать на три коллекции
+
