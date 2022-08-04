@@ -132,5 +132,12 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
             return users;
             
          }
+        public List<TimeRecord> generic = new List<TimeRecord>();
+        public List<TimeRecord> Generic()//возвращаем  List<User>
+
+        {
+            return generic;
+
+        }
     }
 }
