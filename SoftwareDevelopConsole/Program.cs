@@ -10,8 +10,11 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
 {
     internal class Program
     {
-        static void Main(string[] args, int userRole)
+        static void Main(string[] args)
+
         {
+            int userRole = 0;
+
             var userfill = new FileRepository();//создаем экземпляры для возможности вызова метода FillFileUser
             var userreturn = new MemoryRepository();//создаем экземпляры для возможности вызова метода Users
             userfill.FillFileUser(userreturn.Users(),false);//вызываем методы FillFileUser и Users

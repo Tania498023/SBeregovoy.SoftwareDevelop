@@ -70,10 +70,24 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
         //создаем общий метод для сотрудников
         public void FillFileGeneric(List<TimeRecord> timeRecords, int UserRole, bool genericneedwrite)
         {
+            
             string employeepath = @"C:\Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\SoftwareDevelopConsole\Data\Employee.csv";
             string frilanserpath = @"C:\Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\SoftwareDevelopConsole\Data\Frilanser.csv";
             string managerpath = @"C:\Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\SoftwareDevelopConsole\Data\Manager.csv";
             string newpath = "";
+
+            if (UserRole == 0)
+            {
+                newpath = managerpath;
+            }
+            if (UserRole == 1)
+            {
+                newpath = employeepath;
+            }
+            else if (UserRole == 2)
+            {
+                newpath = frilanserpath;
+            }
 
             if (!File.Exists(newpath))
                 return;
@@ -88,18 +102,7 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
                 string genericstr = userrole.Date + "," + userrole.Name + "+" + userrole.Hours + "," + userrole.Message + Environment.NewLine;//создаем строку с разделительными символами и переносом строки
                 File.AppendAllText(newpath, genericstr);//записываем указанную строку 
             }
-            if (UserRole == 0)
-            {
-                newpath = managerpath;
-            }
-            if (UserRole == 1)
-            {
-                newpath = employeepath;
-            }
-            else if (UserRole == 2)
-            {
-                newpath = frilanserpath;
-            }
+            
         }
 
 
