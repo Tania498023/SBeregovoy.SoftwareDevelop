@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 
 namespace SBeregovoy.SoftwareDevelop.Domain
 {
-    
-       public enum UserRole
-        {
-            Manager = 0,
-            Employee = 1,
-            Frelanser = 2,
 
-        }
+    public enum UserRole
+    {
+        Manager = 0,
+        Employee = 1,
+        Frelanser = 2,
+    }
     
 }
