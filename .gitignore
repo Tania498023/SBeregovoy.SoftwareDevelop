@@ -1,11 +1,10 @@
-/.vs
+.vs
 *.suo
-/bin
-/obj
-/Debug
+bin
+obj
+Debug
 **/obj
 **/*.dll
-**/*.cashe
 
 # Created by https://www.gitignore.io
 *.SoftwareDevelop.Domain.dll
@@ -22,3 +21,39 @@ SoftwareDevelopConsole/obj/Debug/*
 *.user
 *.userosscache
 *.sln.docstates
+*.csproj.AssemblyReference.cache
+
+#User Specific
+*.userprefs
+*.usertasks
+*.DotSettings.user
+*.csproj.user
+*.pubxml.user
+*~
+
+#Rider
+.idea/
+.directory
+
+#Mono Project Files
+bin/
+obj/
+packages/*
+.vscode/
+mono_crash.*.json
+
+#Workbench Backup Files
+Base/Factory.mwb.bak
+*.DS_Store
+
+#Project Specific
+WinInstall/*
+!*.nsi
+!*.sh
+*.sln.DotSettings.user
+
+#Production Environment Settings
+*appsettings.Production.json
+
+#Docker Volumes
+Services/Docker/db-data/*
