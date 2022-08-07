@@ -1,7 +1,11 @@
+/.vs
+*.suo
 /bin
 /obj
 /Debug
 **/obj
+**/*.dll
+**/*.cashe
 
 # Created by https://www.gitignore.io
 *.SoftwareDevelop.Domain.dll
@@ -18,7 +22,3 @@ SoftwareDevelopConsole/obj/Debug/*
 *.user
 *.userosscache
 *.sln.docstates
-
-
-/.vs
-/SystemInfo1/SystemInfo1.csproj.DotSettings
