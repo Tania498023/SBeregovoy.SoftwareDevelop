@@ -32,23 +32,20 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
         //создаем общий метод для сотрудников
         public void FillFileGeneric(List<TimeRecord> timeRecords, int roles, bool genericneedwrite)
         {
-            
-            string employeepath = "Employee.csv";
-            string frilanserpath = "Frilanser.csv";
-            string managerpath = "Manager.csv";
+          
             string newpath = "";
 
             if (roles == (int)UserRole.Manager)
             {
-                newpath = managerpath;
+                newpath = "Manager.csv";
             }
             if (roles == (int)UserRole.Employee)
             {
-                newpath = employeepath;
+                newpath = "Employee.csv";
             }
             else if (roles == (int)UserRole.Frelanser)
             {
-                newpath = frilanserpath;
+                newpath = "Frilanser.csv";
             }
 
             if (!File.Exists(newpath))
