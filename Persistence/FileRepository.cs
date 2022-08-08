@@ -12,7 +12,7 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
     {
         public void FillFileUser(List<User> users, bool userneedwrite)
         {
-            string userpath = @"C:\Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\SoftwareDevelopConsole\Data\User.csv";
+            string userpath = "User.csv";
             if (!File.Exists(userpath))
                 return;
             System.IO.FileInfo file = new System.IO.FileInfo(userpath);
@@ -33,9 +33,9 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
         public void FillFileGeneric(List<TimeRecord> timeRecords, int roles, bool genericneedwrite)
         {
             
-            string employeepath = @"C:\Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\SoftwareDevelopConsole\Data\Employee.csv";
-            string frilanserpath = @"C:\Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\SoftwareDevelopConsole\Data\Frilanser.csv";
-            string managerpath = @"C:\Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\SoftwareDevelopConsole\Data\Manager.csv";
+            string employeepath = "Employee.csv";
+            string frilanserpath = "Frilanser.csv";
+            string managerpath = "Manager.csv";
             string newpath = "";
 
             if (roles == (int)UserRole.Manager)

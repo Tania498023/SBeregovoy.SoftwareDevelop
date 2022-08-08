@@ -51,7 +51,9 @@
     <None Include="App.config" />
     <None Include="Data\Frilanser.csv" />
     <None Include="Data\Employee.csv" />
-    <None Include="Data\User.csv" />
+    <None Include="Data\User.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Persistence\Persistence.csproj">
