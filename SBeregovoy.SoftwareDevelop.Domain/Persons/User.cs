@@ -17,4 +17,6 @@ namespace SBeregovoy.SoftwareDevelop.Domain
             UserRole = userRole;
         }
     }
+
+
 }
