@@ -42,7 +42,6 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                     enteruser = UserRole.Manager;
                     break;
                 }
-                
                 else if (controleRole == (int)UserRole.Employee)
                 {
                     enteruser = UserRole.Employee;
@@ -55,9 +54,10 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                 }
                 else
                     Console.WriteLine("Вы ввели несуществующую роль");
-                }
 
-            while (enteruser >= UserRole.Manager && enteruser <= UserRole.Frelanser);
+
+            }while (enteruser >= UserRole.Manager && enteruser <= UserRole.Frelanser);
+
             DisplayMenu(enteruser);
         }
 
@@ -71,30 +71,87 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                 if (userRole == UserRole.Manager)
                 {
                     Console.WriteLine("Меню Руководитель");
-                    Console.WriteLine("1. добавить сотрудника");
-                    Console.WriteLine("2. добавить время сотруднику");
-                    Console.WriteLine("3. посмотреть отчет по всем сотрудникам (возможность выбрать период)");
-                    Console.WriteLine("4. посмотреть часы работы сотрудника");
+                    Showmenegermenu();
                     break;
                 }
                 if (userRole == UserRole.Employee)
                 {
                     Console.WriteLine("Меню Сотрудник");
-                    Console.WriteLine("1. ввести часы");
-                    Console.WriteLine("2. просмотреть часы");
+                    
                     break;
                 }
                 if (userRole == UserRole.Frelanser)
                 {
                     Console.WriteLine("Меню Фрилансер");
-                    Console.WriteLine("1. ввести часы");
-                    Console.WriteLine("2. просмотреть часы");
+                   
                     break;
                 }
 
             }
             while (true);
             
+        }
+
+        private static void Showmenegermenu()
+        {
+            int actionnumber;
+            do
+            {
+                Console.WriteLine("Выберите действие  \n " +
+                    "Введите 1, если вы хотите добавить сотрудника \n " +
+                    "Введите 2, если вы хотите добавить время сотруднику \n " +
+                    "Введите 3, если вы хотите посмотреть отчет по всем сотрудникам (возможность выбрать период)"+
+                    "Введите 4, если вы хотите посмотреть часы работы сотрудника");
+
+                actionnumber = Convert.ToInt32(Console.ReadLine());
+
+                if (actionnumber == 1)
+                {
+                    AddEmployee();
+                    break;
+                }
+                else if (actionnumber == 2)
+                {
+                    AddEmployeeHour();
+                    break;
+                }
+                else if (actionnumber == 3)
+                {
+
+                    WatchEmployeeReport();
+                    break;
+                }
+                else if (actionnumber == 4)
+                {
+
+                    WatchEmployeeHour();
+                    break;
+                }
+                else
+                    Console.WriteLine("Вы выбрали несуществующее действие");
+            }
+
+            while (actionnumber >= 1 && actionnumber <= 4);// проверить условие, доделать для каждого меню, реализовать методы
+        }
+
+        private static void WatchEmployeeReport()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void WatchEmployeeHour()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void AddEmployeeHour()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void AddEmployee()
+        {
+            throw new NotImplementedException();
         }
     }
 }
