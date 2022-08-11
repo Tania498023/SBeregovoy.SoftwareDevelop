@@ -56,7 +56,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                     Console.WriteLine("Вы ввели несуществующую роль");
 
 
-            }while (enteruser >= UserRole.Manager && enteruser <= UserRole.Frelanser);
+            }while (enteruser < UserRole.Manager || enteruser > UserRole.Frelanser);
 
             DisplayMenu(enteruser);
         }
@@ -100,7 +100,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                 Console.WriteLine("Выберите действие  \n " +
                     "Введите 1, если вы хотите добавить сотрудника \n " +
                     "Введите 2, если вы хотите добавить время сотруднику \n " +
-                    "Введите 3, если вы хотите посмотреть отчет по всем сотрудникам (возможность выбрать период)"+
+                    "Введите 3, если вы хотите посмотреть отчет по всем сотрудникам (возможность выбрать период) \n"+
                     "Введите 4, если вы хотите посмотреть часы работы сотрудника");
 
                 actionnumber = Convert.ToInt32(Console.ReadLine());
@@ -131,7 +131,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                     Console.WriteLine("Вы выбрали несуществующее действие");
             }
 
-            while (actionnumber >= 1 && actionnumber <= 4);// проверить условие, доделать для каждого меню, реализовать методы
+            while (actionnumber < 1 || actionnumber > 4);//доделать для каждого меню, реализовать методы
         }
 
         private static void WatchEmployeeReport()
