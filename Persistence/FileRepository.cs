@@ -65,7 +65,7 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
         }
         public List<User> ReadFileUser()
         {
-            string userpath = @"C:\Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\SoftwareDevelopConsole\Data\User.csv";
+            string userpath = "User.csv";
             if (!File.Exists(userpath))
                 return null;
             List<User> users = new List<User>();
@@ -87,22 +87,19 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
 
         public List<TimeRecord> ReadFileGeneric(int roles)
         {
-            string employeepath = @"C:\Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\SoftwareDevelopConsole\Data\Employee.csv";
-            string frilanserpath = @"C:\Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\SoftwareDevelopConsole\Data\Frilanser.csv";
-            string managerpath = @"C:\Users\Tanya\source\repos\SBeregovoy.SoftwareDevelop\SoftwareDevelopConsole\Data\Manager.csv";
             string newpath = "";
 
             if (roles == (int)UserRole.Manager)
             {
-                newpath = managerpath;
+                newpath = "Manager.csv";
             }
             if (roles == (int)UserRole.Employee)
             {
-                newpath = employeepath;
+                newpath = "Employee.csv";
             }
             else if (roles == (int)UserRole.Frelanser)
             {
-                newpath = frilanserpath;
+                newpath = "Frilanser.csv";
             }
             
             if (!File.Exists(newpath))
