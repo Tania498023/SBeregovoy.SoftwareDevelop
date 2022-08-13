@@ -13,6 +13,8 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
         private static UserRole enteruser;
         static FileRepository fill;
         private static bool users;
+        private static User polzovatel;
+        private static int roles;
 
         static void Main(string[] args)
 
@@ -29,20 +31,28 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
 
             var text = fill.ReadFileUser();
             
-            ControlRole();
+            ControlRole(fill);
         }
-        public static void ControlRole()//контроль вводимой роли при входе в программу
+        public static void ControlRole(FileRepository userreturn)//контроль вводимой роли при входе в программу
         {
-           var IR = InputRole();
-
-            DisplayMenu(IR);
+            do
+            {
+                Console.WriteLine("Введите ваше имя");
+                string name = Console.ReadLine();
+                polzovatel = userreturn.UserGet(name);
+                if (polzovatel == null)
+                Console.WriteLine("Пользователь с таким именем не существует");
+            }
+            while (polzovatel == null);
+            DisplayMenu(polzovatel.UserRole);
+            
         }
 
         private static UserRole InputRole()
         {
             do
             {
-                Console.WriteLine("Введите роль \n Введите 0, если вы менеджер \n Введите 1, если вы сотрудник \n Введите 2, если вы фрилансер");
+                Console.WriteLine("Введите роль \n Введите 0, если менеджер \n Введите 1, если сотрудник \n Введите 2, если фрилансер");
                 int controleRole = Convert.ToInt32(Console.ReadLine());
 
                 if (controleRole == (int)UserRole.Manager)
@@ -72,9 +82,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
         {
             do
             {
-                //Console.WriteLine(" ");
-                //int controleRole = Convert.ToInt32(Console.ReadLine());
-
+                
                 if (userRole == UserRole.Manager)
                 {
                     Console.WriteLine("Меню Руководитель");
@@ -197,12 +205,45 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
 
         private static void WatchFrilanserHour()
         {
-            throw new NotImplementedException();
+            var HH = fill.ReadFileGeneric((int)polzovatel.UserRole);//!!!метод вернул коллекцию, сохранили в переменную
+            foreach (var item in HH)//перебираем коллекцию HH, выбираем нужное и сохраняем в переменную item
+            {
+                if (item.Name == polzovatel.Name)//если элемент из коллекции совпадает по имени с пользователем, выводим на консоль
+                Console.WriteLine(item.Date.ToString() + "\t" + item.Name  + "\t" + item.Hours  + "\t" + item.Message);
+                
+            }
+            Console.ReadLine();
         }
 
         private static void AddFrilanserHour()
         {
-            throw new NotImplementedException();
+            AddHour();
+        }
+
+        private static void AddHour()
+        {
+            int H;
+            do
+            {
+                Console.WriteLine("Введите отработанное время");
+                H = Convert.ToInt32(Console.ReadLine());
+                if (H <= 0 || H >= 24)
+                {
+                    Console.WriteLine("Вы вводите некорректные данные");
+
+                }
+                else
+                {
+                    Console.WriteLine("Введите сообщение");
+                    string mas = Console.ReadLine();
+                    var time = new TimeRecord(DateTime.Now, polzovatel.Name, H, mas);
+                    List<TimeRecord> times = new List<TimeRecord>();
+                    times.Add(time);
+                    fill.FillFileGeneric(times, (int)polzovatel.UserRole, true);
+                }
+
+            }
+            while (H <= 0 || H >= 24);
         }
 
         private static void WatchEmployeeHour()//только по себе? делать для сотрудика и фрилансера отдельно или разграничить условиями
@@ -212,7 +253,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
 
         private static void AddEmployeeHour()
         {
-            throw new NotImplementedException();
+            AddHour();
         }
 
         private static void WatchWorkerReport()
@@ -227,7 +268,26 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
 
         private static void AddWorkerHour()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("*************************************************");
+            Console.WriteLine("Введите пользователя");
+            string name = Console.ReadLine();
+            polzovatel = fill.UserGet(name);
+
+            if (polzovatel == null)
+            {
+                Console.WriteLine("Пользователь не существует");
+                return;
+            }
+
+            Console.WriteLine("Введите отработанное время");
+            int H = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Введите сообщение");
+            string mas = Console.ReadLine();
+            var time = new TimeRecord(DateTime.Now, polzovatel.Name, H, mas);
+            List<TimeRecord> times = new List<TimeRecord>();
+            times.Add(time);
+            fill.FillFileGeneric(times, (int)polzovatel.UserRole, true);
+
         }
 
         private static void AddWorker()

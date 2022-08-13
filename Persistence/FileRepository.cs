@@ -12,7 +12,7 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
     {
         public void FillFileUser(List<User> users, bool userneedwrite)
         {
-            string userpath = "User.csv";
+            string userpath = @".\Data\User.csv";
             if (!File.Exists(userpath))
                 return;
             System.IO.FileInfo file = new System.IO.FileInfo(userpath);
@@ -37,15 +37,15 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
 
             if (roles == (int)UserRole.Manager)
             {
-                newpath = "Manager.csv";
+                newpath = @".\Data\Manager.csv";
             }
             if (roles == (int)UserRole.Employee)
             {
-                newpath = "Employee.csv";
+                newpath = @".\Data\Employee.csv";
             }
             else if (roles == (int)UserRole.Frelanser)
             {
-                newpath = "Frilanser.csv";
+                newpath = @".\Data\Frilanser.csv";
             }
 
             if (!File.Exists(newpath))
@@ -58,14 +58,14 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
 
             foreach (TimeRecord userrole in timeRecords)//перебираем коллекцию и выбираем из нее элементы
             {
-                string genericstr = userrole.Date + "," + userrole.Name + "+" + userrole.Hours + "," + userrole.Message + Environment.NewLine;//создаем строку с разделительными символами и переносом строки
+                string genericstr = userrole.Date + "," + userrole.Name + "," + userrole.Hours + "," + userrole.Message + Environment.NewLine;//создаем строку с разделительными символами и переносом строки
                 File.AppendAllText(newpath, genericstr);//записываем указанную строку 
             }
             
         }
         public List<User> ReadFileUser()
         {
-            string userpath = "User.csv";
+            string userpath = @".\Data\User.csv";
             if (!File.Exists(userpath))
                 return null;
             List<User> users = new List<User>();
@@ -91,15 +91,15 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
 
             if (roles == (int)UserRole.Manager)
             {
-                newpath = "Manager.csv";
+                newpath = @".\Data\Manager.csv";
             }
             if (roles == (int)UserRole.Employee)
             {
-                newpath = "Employee.csv";
+                newpath = @".\Data\Employee.csv";
             }
             else if (roles == (int)UserRole.Frelanser)
             {
-                newpath = "Frilanser.csv";
+                newpath = @".\Data\Frilanser.csv";
             }
             
             if (!File.Exists(newpath))
@@ -118,7 +118,15 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
             }
             return generic;
         }
-
+        public User UserGet(string name)
+        {
+            foreach (var record in ReadFileUser())
+            {
+                if (record.Name == name)
+                    return record;
+            }
+            return null;
+        }
 
 
 
