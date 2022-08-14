@@ -111,6 +111,8 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
 
             foreach (var stroka in strings)
             {
+                if (string.IsNullOrEmpty(stroka))
+                    continue;
                 var plitedstroka = stroka.Split(',');
                                
                 var user = new TimeRecord(plitedstroka);//создали  объект

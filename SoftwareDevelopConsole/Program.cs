@@ -200,17 +200,23 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                     Console.WriteLine("Вы выбрали несуществующее действие");
             }
 
-            while (actionfrilanser < 1 || actionfrilanser > 2);//реализовать методы
+            while (actionfrilanser < 1 || actionfrilanser > 2);
         }
 
         private static void WatchFrilanserHour()
         {
+            WatchHour();
+        }
+
+        private static void WatchHour()
+        {
             var HH = fill.ReadFileGeneric((int)polzovatel.UserRole);//!!!метод вернул коллекцию, сохранили в переменную
             foreach (var item in HH)//перебираем коллекцию HH, выбираем нужное и сохраняем в переменную item
             {
+
                 if (item.Name == polzovatel.Name)//если элемент из коллекции совпадает по имени с пользователем, выводим на консоль
-                Console.WriteLine(item.Date.ToString() + "\t" + item.Name  + "\t" + item.Hours  + "\t" + item.Message);
-                
+                    Console.WriteLine(item.Date.ToString() + "\t" + item.Name + "\t" + item.Hours + "\t" + item.Message);
+
             }
             Console.ReadLine();
         }
@@ -246,9 +252,9 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             while (H <= 0 || H >= 24);
         }
 
-        private static void WatchEmployeeHour()//только по себе? делать для сотрудика и фрилансера отдельно или разграничить условиями
-        {
-            throw new NotImplementedException();
+        private static void WatchEmployeeHour()
+        { 
+            WatchHour();
         }
 
         private static void AddEmployeeHour()
@@ -261,7 +267,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             throw new NotImplementedException();
         }
 
-        private static void WatchWorkerHour()//по всем сотрудникам
+        private static void WatchWorkerHour()
         {
             throw new NotImplementedException();
         }
