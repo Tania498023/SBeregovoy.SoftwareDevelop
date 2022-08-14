@@ -12,9 +12,9 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
     {
         private static UserRole enteruser;
         static FileRepository fill;
-        private static bool users;
         private static User polzovatel;
-        private static int roles;
+        
+        
 
         static void Main(string[] args)
 
@@ -262,9 +262,14 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             AddHour();
         }
 
-        private static void WatchWorkerReport()
+        private static void WatchWorkerReport()//по конкретному сотруднику
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Введите дату начала отчета");
+            var startdate = Convert.ToDateTime(Console.ReadLine());
+            Console.WriteLine("Введите дату окончания отчета");
+            var enddate = Convert.ToDateTime(Console.ReadLine());
+           fill.ReportGetByUser(polzovatel.Name, polzovatel.UserRole, startdate, enddate);
+            
         }
 
         private static void WatchWorkerHour()

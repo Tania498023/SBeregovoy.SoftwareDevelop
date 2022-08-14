@@ -129,7 +129,27 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
             }
             return null;
         }
+        public List<TimeRecord> ReportGet(UserRole userRole, DateTime? from = null, DateTime? to = null)
+        {
+            var records = ReadFileGeneric((int)userRole);
 
+
+        
+            if (from == null)
+            {
+                from = DateTime.Now.Date.AddYears(-100);
+            }
+            if (to == null)
+            {
+                to = DateTime.Now.Date;
+            }
+
+            return records.Where(x => from.Value <= x.Date && x.Date <= to).ToList();
+        }
+        public List<TimeRecord> ReportGetByUser(string userName, UserRole userRole, DateTime? from = null, DateTime? to = null)
+        {
+            return ReportGet(userRole, from, to).Where(x => x.Name == userName).ToList();
+        }
 
 
 

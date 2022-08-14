@@ -92,6 +92,7 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
             switch (userRole)
             {
                 case UserRole.Manager:
+
                     manager.Add(timeRecord);
                     break;
                 case UserRole.Employee:
