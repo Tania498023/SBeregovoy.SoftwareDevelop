@@ -1,4 +1,6 @@
-﻿using SBeregovoy.SoftwareDevelop.Domain;
+﻿using NPOI.SS.Formula.Functions;
+using Prometheus;
+using SBeregovoy.SoftwareDevelop.Domain;
 using SBeregovoy.SoftwareDevelop.Persistence;
 using System;
 using System.Collections.Generic;
@@ -262,19 +264,42 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             AddHour();
         }
 
-        private static void WatchWorkerReport()//по конкретному сотруднику
+        private static void WatchWorkerReport()//по 
+        {
+            
+            Console.ReadLine();
+        }
+        
+      
+        private static void WatchWorkerHour()//часы по конкретному сотруднику
         {
             Console.WriteLine("Введите дату начала отчета");
             var startdate = Convert.ToDateTime(Console.ReadLine());
             Console.WriteLine("Введите дату окончания отчета");
             var enddate = Convert.ToDateTime(Console.ReadLine());
-           fill.ReportGetByUser(polzovatel.Name, polzovatel.UserRole, startdate, enddate);
-            
-        }
 
-        private static void WatchWorkerHour()
-        {
-            throw new NotImplementedException();
+            Console.WriteLine("Введите пользователя");
+            string name = Console.ReadLine();
+           var rephour = fill.UserGet(name);
+            int sumhour = 0;
+
+            if (rephour == null)
+            {
+                Console.WriteLine("Пользователь не существует");
+                return;
+            }
+            var HH = fill.ReadFileGeneric((int)polzovatel.UserRole);
+            foreach (var item in HH)
+            {
+                if (startdate < item.Date && enddate > item.Date)//протестировать
+                    if (item.Name == polzovatel.Name)
+                    {
+                        Console.WriteLine(item.Date.ToString() + "\t" + item.Hours + "\t" + item.Message);
+                        sumhour += item.Hours;
+                    }
+            }
+            Console.WriteLine(sumhour);
+            Console.ReadLine();
         }
 
         private static void AddWorkerHour()
