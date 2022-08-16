@@ -264,7 +264,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             AddHour();
         }
 
-        private static void WatchWorkerReport()//по 
+        private static void WatchWorkerReport()
         {
             
             Console.ReadLine();
@@ -280,7 +280,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
 
             Console.WriteLine("Введите пользователя");
             string name = Console.ReadLine();
-           var rephour = fill.UserGet(name);
+            var rephour = fill.UserGet(name);
             int sumhour = 0;
 
             if (rephour == null)
@@ -288,17 +288,17 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                 Console.WriteLine("Пользователь не существует");
                 return;
             }
-            var HH = fill.ReadFileGeneric((int)polzovatel.UserRole);
+            var HH = fill.ReadFileGeneric((int)rephour.UserRole);
             foreach (var item in HH)
             {
-                if (startdate < item.Date && enddate > item.Date)//протестировать
-                    if (item.Name == polzovatel.Name)
+                if (item.Date >= startdate && item.Date <= enddate)
+                    if (item.Name == rephour.Name)
                     {
                         Console.WriteLine(item.Date.ToString() + "\t" + item.Hours + "\t" + item.Message);
                         sumhour += item.Hours;
                     }
             }
-            Console.WriteLine(sumhour);
+            Console.WriteLine($"Всего отработано {sumhour} часов");
             Console.ReadLine();
         }
 
