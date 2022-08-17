@@ -76,8 +76,8 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
             foreach (var stroka in strings)
             {
                 var plitedstroka = stroka.Split(',');
-              
-                    strokainenum = (UserRole)Enum.Parse(typeof(UserRole), plitedstroka[1]);
+
+                strokainenum = (UserRole)Enum.Parse(typeof(UserRole), plitedstroka[1]);
 
                 var user = new User(plitedstroka[0], strokainenum);//создали  объект
                 users.Add(user);// добавили объект в коллекцию
