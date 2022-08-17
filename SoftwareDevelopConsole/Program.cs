@@ -308,8 +308,8 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                     Console.WriteLine("Пользователь не существует");
 
                 }
-            
-                //переменная новый метод передаем
+
+            Frilanser.PrintRepFrilanser();
 
             var HH = fill.ReadFileGeneric((int)rephour.UserRole);
             if (rephour.UserRole == UserRole.Manager)

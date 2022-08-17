@@ -9,11 +9,18 @@ namespace SBeregovoy.SoftwareDevelop.Domain
     public class Frilanser : Person
     {
         public int totalHour;
-        public List<TimeRecord> printF;
+        public static List<TimeRecord> printF;
+        public static DateTime startdates;
+        public static DateTime enddates;
+        public static string freename;
+
         public decimal TotalPay { get; }
         
         public Frilanser(string name, List<TimeRecord> timeRecords,DateTime startdate, DateTime enddate) : base(name, timeRecords)
         {
+            startdates = startdate ;
+            enddates = enddate ;
+            freename = name ;
             printF =timeRecords;
             decimal totalPay = 0;
             foreach (var timeRecord in timeRecords)
@@ -30,15 +37,15 @@ namespace SBeregovoy.SoftwareDevelop.Domain
             
 
         }
-        public  static void  PrintRepFrilanser(List<TimeRecord> timeRecords)
+        public  static void  PrintRepFrilanser()
         {
 
-            foreach (var timeRecord in timeRecords)
+            foreach (var item in printF)
             {
-                if (timeRecord.Date >= startdate && timeRecord.Date <= enddate)
-                    if (==timeRecord.Name)
+                if (item.Date >= startdates && item.Date <= enddates)
+                    if (freename == item.Name)
                     {
-                        Console.WriteLine(timeRecord.Date + "\t" + timeRecord.Hours + "\t" + timeRecord.Message);//реализ метода в Фрил
+                        Console.WriteLine(item.Date + "\t" + item.Hours + "\t" + item.Message);
                         Console.ReadLine();
                     }
             }
