@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SBeregovoy.SoftwareDevelop.Domain
 {
-    internal class Employee : Staff
+    public class Employee : Staff
     {
         public decimal TotalPay { get; }
         public Employee(string name, List<TimeRecord> timeRecords) : base(name, 120000, timeRecords)

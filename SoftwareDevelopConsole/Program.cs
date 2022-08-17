@@ -15,8 +15,10 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
         private static UserRole enteruser;
         static FileRepository fill;
         private static User polzovatel;
-        
-        
+       
+
+        //public static DateTime enddate;
+        //public static DateTime startdate;
 
         static void Main(string[] args)
 
@@ -269,37 +271,67 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             
             Console.ReadLine();
         }
-        
-      
+
+
         private static void WatchWorkerHour()//часы по конкретному сотруднику
         {
-            Console.WriteLine("Введите дату начала отчета");
-            var startdate = Convert.ToDateTime(Console.ReadLine());
-            Console.WriteLine("Введите дату окончания отчета");
-            var enddate = Convert.ToDateTime(Console.ReadLine());
-
-            Console.WriteLine("Введите пользователя");
-            string name = Console.ReadLine();
-            var rephour = fill.UserGet(name);
-            int sumhour = 0;
-
-            if (rephour == null)
+              DateTime startdate;
+              DateTime enddate;
+            do
             {
-                Console.WriteLine("Пользователь не существует");
-                return;
+                Console.WriteLine("Введите дату начала отчета");
+                startdate = Convert.ToDateTime(Console.ReadLine());
+                Console.WriteLine("Введите дату окончания отчета");
+                enddate = Convert.ToDateTime(Console.ReadLine());
+
+                if (enddate < startdate)
+                {
+                    Console.WriteLine("Вы  вводите некорректную дату");
+                   
+                }
+                else
+                    break;
             }
+            while (true);
+
+           
+           
+                Console.WriteLine("Введите пользователя");
+
+                string inputstring = Console.ReadLine();
+                var rephour = fill.UserGet(inputstring);
+
+                int sumhour = 0;
+
+                if (rephour == null)
+                {
+                    Console.WriteLine("Пользователь не существует");
+
+                }
+            
+                //переменная новый метод передаем
+
             var HH = fill.ReadFileGeneric((int)rephour.UserRole);
-            foreach (var item in HH)
+            if (rephour.UserRole == UserRole.Manager)
             {
-                if (item.Date >= startdate && item.Date <= enddate)
-                    if (item.Name == rephour.Name)
-                    {
-                        Console.WriteLine(item.Date.ToString() + "\t" + item.Hours + "\t" + item.Message);
-                        sumhour += item.Hours;
-                    }
+                var totp = new Manager(rephour.Name,HH);
+               
             }
+            else if (rephour.UserRole == UserRole.Employee)
+            {
+                var totp = new Employee(rephour.Name, HH);
+            }
+            else if (rephour.UserRole == UserRole.Frelanser)
+            {
+                var totp = new Frilanser(rephour.Name, HH, startdate, enddate);
+
+                Console.WriteLine(totp.TotalPay);
+                Console.WriteLine(totp.totalHour);
+            }
+            
             Console.WriteLine($"Всего отработано {sumhour} часов");
-            Console.ReadLine();
+                Console.ReadLine();
+            
         }
 
         private static void AddWorkerHour()
@@ -311,7 +343,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
 
             if (polzovatel == null)
             {
-                Console.WriteLine("Пользователь не существует");
+                Console.WriteLine("Пользователь не существует");//некорректная проверка
                 return;
             }
 
