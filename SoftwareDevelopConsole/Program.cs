@@ -177,7 +177,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                     Console.WriteLine("Вы выбрали несуществующее действие");
             }
 
-            while (actionemployee < 1 || actionemployee > 2);//доделать для каждого меню, реализовать методы
+            while (actionemployee < 1 || actionemployee > 2);
         }
         private static void Showfrilansermenu()
         {
@@ -294,23 +294,18 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             }
             while (true);
 
-           
-           
+                      
                 Console.WriteLine("Введите пользователя");
 
                 string inputstring = Console.ReadLine();
                 var rephour = fill.UserGet(inputstring);
-
-                int sumhour = 0;
-
+             
                 if (rephour == null)
                 {
                     Console.WriteLine("Пользователь не существует");
 
                 }
-
-            Frilanser.PrintRepFrilanser();
-
+                     
             var HH = fill.ReadFileGeneric((int)rephour.UserRole);
             if (rephour.UserRole == UserRole.Manager)
             {
@@ -324,14 +319,13 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             else if (rephour.UserRole == UserRole.Frelanser)
             {
                 var totp = new Frilanser(rephour.Name, HH, startdate, enddate);
-
-                Console.WriteLine(totp.TotalPay);
-                Console.WriteLine(totp.totalHour);
-            }
-            
-            Console.WriteLine($"Всего отработано {sumhour} часов");
+                totp.PrintRepFrilanser();
+                Console.WriteLine($"Всего отработано {totp.totalHour}");
+                Console.WriteLine($"Всего заработано { totp.TotalPay}");
+               
                 Console.ReadLine();
-            
+            }
+      
         }
 
         private static void AddWorkerHour()

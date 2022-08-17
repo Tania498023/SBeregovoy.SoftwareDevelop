@@ -9,10 +9,10 @@ namespace SBeregovoy.SoftwareDevelop.Domain
     public class Frilanser : Person
     {
         public int totalHour;
-        public static List<TimeRecord> printF;
+        
         public static DateTime startdates;
         public static DateTime enddates;
-        public static string freename;
+        public int sumhour;
 
         public decimal TotalPay { get; }
         
@@ -20,8 +20,7 @@ namespace SBeregovoy.SoftwareDevelop.Domain
         {
             startdates = startdate ;
             enddates = enddate ;
-            freename = name ;
-            printF =timeRecords;
+          
             decimal totalPay = 0;
             foreach (var timeRecord in timeRecords)
             {
@@ -37,20 +36,19 @@ namespace SBeregovoy.SoftwareDevelop.Domain
             
 
         }
-        public  static void  PrintRepFrilanser()
+        public  void  PrintRepFrilanser()
         {
-
-            foreach (var item in printF)
+            
+            foreach (TimeRecord item in base.TimeRecords )
             {
                 if (item.Date >= startdates && item.Date <= enddates)
-                    if (freename == item.Name)
+                    if (base.Name == item.Name)
                     {
                         Console.WriteLine(item.Date + "\t" + item.Hours + "\t" + item.Message);
-                        Console.ReadLine();
+                        sumhour += item.Hours;
                     }
             }
-            
-            
+           
         }
 
     }
