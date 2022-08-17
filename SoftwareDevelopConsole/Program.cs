@@ -303,18 +303,26 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                 if (rephour == null)
                 {
                     Console.WriteLine("Пользователь не существует");
-
                 }
                      
             var HH = fill.ReadFileGeneric((int)rephour.UserRole);
             if (rephour.UserRole == UserRole.Manager)
             {
-                var totp = new Manager(rephour.Name,HH);
-               
+                var totp = new Manager(rephour.Name,HH, startdate, enddate);
+                totp.PrintRepManager();
+                Console.WriteLine($"Всего отработано {totp.totalHour}");
+                Console.WriteLine($"Всего заработано {totp.TotalPay}");
+
+                Console.ReadLine();
             }
             else if (rephour.UserRole == UserRole.Employee)
             {
-                var totp = new Employee(rephour.Name, HH);
+                var totp = new Employee(rephour.Name, HH, startdate, enddate);
+                totp.PrintRepEmployee();
+                Console.WriteLine($"Всего отработано {totp.totalHour}");
+                Console.WriteLine($"Всего заработано {totp.TotalPay}");
+
+                Console.ReadLine();
             }
             else if (rephour.UserRole == UserRole.Frelanser)
             {
