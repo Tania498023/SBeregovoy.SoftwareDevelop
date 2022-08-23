@@ -120,7 +120,8 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                     "Введите 1, если вы хотите добавить сотрудника \n " +
                     "Введите 2, если вы хотите добавить время сотруднику \n " +
                     "Введите 3, если вы хотите посмотреть отчет по всем сотрудникам (возможность выбрать период) \n " +
-                    "Введите 4, если вы хотите посмотреть часы работы сотрудника");
+                    "Введите 4, если вы хотите посмотреть часы работы сотрудника \n " +
+                    "Введите 5, если вы хотите выйти из программы");
 
                 actionmanager = Convert.ToInt32(Console.ReadLine());
 
@@ -146,11 +147,17 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                     WatchWorkerHour();
                     break;
                 }
+                else if (actionmanager == 5)
+                {
+
+                    Exitprogram();
+                    break;
+                }
                 else
                     Console.WriteLine("Вы выбрали несуществующее действие");
             }
 
-            while (actionmanager < 1 || actionmanager > 4);//доделать для каждого меню, реализовать методы
+            while (actionmanager < 1 || actionmanager > 5);
         }
         private static void Showemployeemenu()
         {
@@ -207,6 +214,10 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             while (actionfrilanser < 1 || actionfrilanser > 2);
         }
 
+        private static void Exitprogram()
+        {
+            Environment.Exit(0);
+        }
         private static void WatchFrilanserHour()
         {
             WatchHour();
@@ -290,9 +301,9 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             while (true);
 
             List<TimeRecord> allworkrep= new List<TimeRecord>();//создали новую общую коллекцию (пустая)
-            for(int i = 0; i < 3; i++)
+            for(int indexrole = 0; indexrole < 3; indexrole++)
             {
-                var allwork = fill.ReadFileGeneric(i);//вычитываем все файлы в коллекцию allwork
+                var allwork = fill.ReadFileGeneric(indexrole);//вычитываем все файлы в коллекцию allwork
                 allworkrep.AddRange(allwork);//добавляем группу элементов коллекции allwork в общую коллекцию allworkrep
             }
 
@@ -320,10 +331,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             foreach (var sortwork in workmap)
             {
                 var rephour = fill.UserGet(sortwork.Key);//получаем имя-ключ из словаря и значение кладем в переменную rephour
-                
-                
-                //просмотреть ТЗ, что еще не доделали
-
+      
                 var HH = sortwork.Value;//значение из словаря положили в переменную HH
                 if (rephour.UserRole == UserRole.Manager)//проверяем роль через имя
                 {
