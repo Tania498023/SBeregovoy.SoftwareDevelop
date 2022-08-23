@@ -289,49 +289,54 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             }
             while (true);
 
-            List<TimeRecord> allworkrep= new List<TimeRecord>();
-            var workmanag = fill.ReadFileGeneric((int)UserRole.Manager);
-            allworkrep.AddRange(workmanag);
-            var workemployee = fill.ReadFileGeneric((int)UserRole.Employee);
-            allworkrep.AddRange(workemployee);
-            var workfrilans = fill.ReadFileGeneric((int)UserRole.Frelanser);
-            allworkrep.AddRange(workfrilans);
-
-            Dictionary<string, List<TimeRecord>> workmap = new Dictionary<string, List<TimeRecord>>();
-            foreach(var workitem in allworkrep)
+            List<TimeRecord> allworkrep= new List<TimeRecord>();//создали новую общую коллекцию (пустая)
+            for(int i = 0; i < 3; i++)
             {
-                if (workitem.Date >= startdate && workitem.Date <= enddate)
-                    if ( !workmap.ContainsKey(workitem.Name))
-                {
-                    workmap.Add(workitem.Name, new List<TimeRecord>());
-                   workmap[workitem.Name].Add(workitem);
-                }   
-                else
-                {
-                    workmap[workitem.Name].Add(workitem);
+                var allwork = fill.ReadFileGeneric(i);//вычитываем все файлы в коллекцию allwork
+                allworkrep.AddRange(allwork);//добавляем группу элементов коллекции allwork в общую коллекцию allworkrep
+            }
+
+            
+            Dictionary<string, List<TimeRecord>> workmap = new Dictionary<string, List<TimeRecord>>();//создаем новый словарь (пока пустой), в котором тип
+                                                                                                      //Ключа строка(фильтруем по имени, так как
+                                                                                                      //в нашем приложении оно уникально), тип Значения
+                                                                                                      // Список(List<>)
+            foreach(var workitem in allworkrep)//перебираем общую коллекцию и каждый ее элемент кладем в переменную workitem
+            {
+                if (workitem.Date >= startdate && workitem.Date <= enddate)//фильтруем дату отчета
+                    if ( !workmap.ContainsKey(workitem.Name))//проверяем наличие Ключа, если его нет
+                    {
+                        workmap.Add(workitem.Name, new List<TimeRecord>());// то добавляем ключ, а значение пока еще пустое!!!
+                       workmap[workitem.Name].Add(workitem);//после добавления ключа, добавляем Значение по вышедобавленному ключу
+                    }   
+                    else//иначе ключ есть
+                    {
+                        workmap[workitem.Name].Add(workitem);//просто добавляем Значение по существующему ключу
                    
-                }
+                    }
      
             }
 
             foreach (var sortwork in workmap)
             {
-                var rephour = fill.UserGet(sortwork.Key);
+                var rephour = fill.UserGet(sortwork.Key);//получаем имя-ключ из словаря и значение кладем в переменную rephour
+                
+                
+                //просмотреть ТЗ, что еще не доделали
 
-
-                var HH = sortwork.Value;
-                if (rephour.UserRole == UserRole.Manager)
+                var HH = sortwork.Value;//значение из словаря положили в переменную HH
+                if (rephour.UserRole == UserRole.Manager)//проверяем роль через имя
                 {
-                    var totp = new Manager(rephour.Name, HH, startdate, enddate);
+                    var totp = new Manager(rephour.Name, HH, startdate, enddate);//создаем новый экземпляр типа Manager
                     Console.WriteLine("");
                     Console.WriteLine("--------------------------------------");
                     Console.WriteLine($"Сотрудник {sortwork.Key}");
-                    totp.PrintRepManager();
-                    
-                    Console.WriteLine($"Всего отработано {totp.sumhour}");
-                    Console.WriteLine($"Всего заработано {totp.TotalPay}");
-                    itoghour += totp.sumhour;
-                    itogtotalpay += totp.TotalPay;
+                    totp.PrintRepManager();//у экземпляра вызываем метод PrintRepManager
+
+                    Console.WriteLine($"Всего отработано {totp.sumhour}");//итоговое время по конкретному сотруднику
+                    Console.WriteLine($"Всего заработано {totp.TotalPay}");//итоговая зп по конкретному сотруднику
+                    itoghour += totp.sumhour;//итоговое время по всем независимо от роли
+                    itogtotalpay += totp.TotalPay;//итоговая з/п по всем независимо от роли
 
 
                 }
