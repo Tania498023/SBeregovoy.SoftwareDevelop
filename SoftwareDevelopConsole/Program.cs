@@ -15,7 +15,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
         private static UserRole enteruser;
         static FileRepository fill;
         private static User polzovatel;
-       
+
 
         //public static DateTime enddate;
         //public static DateTime startdate;
@@ -28,13 +28,13 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             fill = new FileRepository();//создаем экземпляры для возможности вызова метода FillFileUser
             var userreturn = new MemoryRepository();//создаем экземпляры для возможности вызова метода Users
             fill.FillFileUser(userreturn.Users(), false);//вызываем методы FillFileUser и Users
-            
+
 
             var genericreturn = new MemoryRepository();//создаем экземпляры для возможности вызова метода Employees
             fill.FillFileGeneric(genericreturn.Generic(), userRole, false);//вызываем методы FillFileEmployee и Employees
 
             var text = fill.ReadFileUser();
-            
+
             ControlRole(fill);
         }
         public static void ControlRole(FileRepository userreturn)//контроль вводимой роли при входе в программу
@@ -45,11 +45,11 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                 string name = Console.ReadLine();
                 polzovatel = userreturn.UserGet(name);
                 if (polzovatel == null)
-                Console.WriteLine("Пользователь с таким именем не существует");
+                    Console.WriteLine("Пользователь с таким именем не существует");
             }
             while (polzovatel == null);
             DisplayMenu(polzovatel.UserRole);
-            
+
         }
 
         private static UserRole InputRole()
@@ -86,7 +86,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
         {
             do
             {
-                
+
                 if (userRole == UserRole.Manager)
                 {
                     Console.WriteLine("Меню Руководитель");
@@ -108,7 +108,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
 
             }
             while (true);
-            
+
         }
 
         private static void Showmanagermenu()
@@ -257,7 +257,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
         }
 
         private static void WatchEmployeeHour()
-        { 
+        {
             WatchHour();
         }
 
@@ -266,17 +266,12 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             AddHour();
         }
 
-        private static void WatchWorkerReport()
+        private static void WatchWorkerReport()//по все сотрудникам за выбранный период (группируем по сотруднику)
         {
-            
-            Console.ReadLine();
-        }
-
-
-        private static void WatchWorkerHour()//часы по конкретному сотруднику
-        {
-              DateTime startdate;
-              DateTime enddate;
+            DateTime startdate;
+            DateTime enddate;
+            int itoghour = 0;
+            decimal itogtotalpay = 0;
             do
             {
                 Console.WriteLine("Введите дату начала отчета");
@@ -287,92 +282,198 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                 if (enddate < startdate)
                 {
                     Console.WriteLine("Вы  вводите некорректную дату");
-                   
+
                 }
                 else
                     break;
             }
             while (true);
 
-                      
+            List<TimeRecord> allworkrep= new List<TimeRecord>();
+            var workmanag = fill.ReadFileGeneric((int)UserRole.Manager);
+            allworkrep.AddRange(workmanag);
+            var workemployee = fill.ReadFileGeneric((int)UserRole.Employee);
+            allworkrep.AddRange(workemployee);
+            var workfrilans = fill.ReadFileGeneric((int)UserRole.Frelanser);
+            allworkrep.AddRange(workfrilans);
+
+            Dictionary<string, List<TimeRecord>> workmap = new Dictionary<string, List<TimeRecord>>();
+            foreach(var workitem in allworkrep)
+            {
+                if (workitem.Date >= startdate && workitem.Date <= enddate)
+                    if ( !workmap.ContainsKey(workitem.Name))
+                {
+                    workmap.Add(workitem.Name, new List<TimeRecord>());
+                   workmap[workitem.Name].Add(workitem);
+                }   
+                else
+                {
+                    workmap[workitem.Name].Add(workitem);
+                   
+                }
+     
+            }
+
+            foreach (var sortwork in workmap)
+            {
+                var rephour = fill.UserGet(sortwork.Key);
+
+
+                var HH = sortwork.Value;
+                if (rephour.UserRole == UserRole.Manager)
+                {
+                    var totp = new Manager(rephour.Name, HH, startdate, enddate);
+                    Console.WriteLine("");
+                    Console.WriteLine("--------------------------------------");
+                    Console.WriteLine($"Сотрудник {sortwork.Key}");
+                    totp.PrintRepManager();
+                    
+                    Console.WriteLine($"Всего отработано {totp.sumhour}");
+                    Console.WriteLine($"Всего заработано {totp.TotalPay}");
+                    itoghour += totp.sumhour;
+                    itogtotalpay += totp.TotalPay;
+
+
+                }
+                else if (rephour.UserRole == UserRole.Employee)
+                {
+                    var totp = new Employee(rephour.Name, HH, startdate, enddate);
+                    Console.WriteLine("");
+                    Console.WriteLine("--------------------------------------");
+                    Console.WriteLine($"Сотрудник {sortwork.Key}");
+                    totp.PrintRepEmployee();
+                    
+                    Console.WriteLine($"Всего отработано {totp.sumhour}");
+                    Console.WriteLine($"Всего заработано {totp.TotalPay}");
+                    itoghour += totp.sumhour;
+                    itogtotalpay += totp.TotalPay;
+
+                }
+                else if (rephour.UserRole == UserRole.Frelanser)
+                {
+                    var totp = new Frilanser(rephour.Name, HH, startdate, enddate);
+                    Console.WriteLine("");
+                    Console.WriteLine("--------------------------------------");
+                    Console.WriteLine($"Сотрудник {sortwork.Key}");
+                    totp.PrintRepFrilanser();
+                    
+                    Console.WriteLine($"Всего отработано {totp.sumhour}");
+                    Console.WriteLine($"Всего заработано {totp.TotalPay}");
+                    itoghour += totp.sumhour;
+                    itogtotalpay += totp.TotalPay;
+
+                }
+
+            }
+            Console.WriteLine("");
+            Console.WriteLine("--------------------------------------");
+            Console.WriteLine($"Всего отработано {itoghour}");
+            Console.WriteLine($"Всего заработано {itogtotalpay}");
+            Console.ReadLine();
+        }
+
+            private static void WatchWorkerHour()//часы по конкретному сотруднику
+            {
+                DateTime startdate;
+                DateTime enddate;
+                
+                do
+                {
+                    Console.WriteLine("Введите дату начала отчета");
+                    startdate = Convert.ToDateTime(Console.ReadLine());
+                    Console.WriteLine("Введите дату окончания отчета");
+                    enddate = Convert.ToDateTime(Console.ReadLine());
+
+                    if (enddate < startdate)
+                    {
+                        Console.WriteLine("Вы  вводите некорректную дату");
+
+                    }
+                    else
+                        break;
+                }
+                while (true);
+
+
                 Console.WriteLine("Введите пользователя");
 
                 string inputstring = Console.ReadLine();
                 var rephour = fill.UserGet(inputstring);
-             
+
                 if (rephour == null)
                 {
                     Console.WriteLine("Пользователь не существует");
                 }
-                     
-            var HH = fill.ReadFileGeneric((int)rephour.UserRole);
-            if (rephour.UserRole == UserRole.Manager)
-            {
-                var totp = new Manager(rephour.Name,HH, startdate, enddate);
-                totp.PrintRepManager();
-                Console.WriteLine($"Всего отработано {totp.totalHour}");
-                Console.WriteLine($"Всего заработано {totp.TotalPay}");
 
-                Console.ReadLine();
-            }
-            else if (rephour.UserRole == UserRole.Employee)
-            {
-                var totp = new Employee(rephour.Name, HH, startdate, enddate);
-                totp.PrintRepEmployee();
-                Console.WriteLine($"Всего отработано {totp.totalHour}");
-                Console.WriteLine($"Всего заработано {totp.TotalPay}");
+                var HH = fill.ReadFileGeneric((int)rephour.UserRole);
+                if (rephour.UserRole == UserRole.Manager)
+                {
+                    var totp = new Manager(rephour.Name, HH, startdate, enddate);
+                    totp.PrintRepManager();
+                    Console.WriteLine($"Всего отработано {totp.sumhour}");
+                    Console.WriteLine($"Всего заработано {totp.TotalPay}");
 
-                Console.ReadLine();
-            }
-            else if (rephour.UserRole == UserRole.Frelanser)
-            {
-                var totp = new Frilanser(rephour.Name, HH, startdate, enddate);
-                totp.PrintRepFrilanser();
-                Console.WriteLine($"Всего отработано {totp.totalHour}");
-                Console.WriteLine($"Всего заработано { totp.TotalPay}");
-               
-                Console.ReadLine();
-            }
-      
-        }
+                    Console.ReadLine();
+                }
+                else if (rephour.UserRole == UserRole.Employee)
+                {
+                    var totp = new Employee(rephour.Name, HH, startdate, enddate);
+                    totp.PrintRepEmployee();
+                    Console.WriteLine($"Всего отработано {totp.sumhour}");
+                    Console.WriteLine($"Всего заработано {totp.TotalPay}");
 
-        private static void AddWorkerHour()
-        {
-            Console.WriteLine("*************************************************");
-            Console.WriteLine("Введите пользователя");
-            string name = Console.ReadLine();
-            polzovatel = fill.UserGet(name);
+                    Console.ReadLine();
+                }
+                else if (rephour.UserRole == UserRole.Frelanser)
+                {
+                    var totp = new Frilanser(rephour.Name, HH, startdate, enddate);
+                    totp.PrintRepFrilanser();
+                    Console.WriteLine($"Всего отработано {totp.sumhour}");
+                    Console.WriteLine($"Всего заработано {totp.TotalPay}");
 
-            if (polzovatel == null)
-            {
-                Console.WriteLine("Пользователь не существует");//некорректная проверка
-                return;
+                    Console.ReadLine();
+                }
+
             }
 
-            Console.WriteLine("Введите отработанное время");
-            int H = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Введите сообщение");
-            string mas = Console.ReadLine();
-            var time = new TimeRecord(DateTime.Now, polzovatel.Name, H, mas);
-            List<TimeRecord> times = new List<TimeRecord>();
-            times.Add(time);
-            fill.FillFileGeneric(times, (int)polzovatel.UserRole, true);
+            private static void AddWorkerHour()
+            {
+                Console.WriteLine("*************************************************");
+                Console.WriteLine("Введите пользователя");
+                string name = Console.ReadLine();
+                polzovatel = fill.UserGet(name);
 
-        }
+                if (polzovatel == null)
+                {
+                    Console.WriteLine("Пользователь не существует");//некорректная проверка
+                    return;
+                }
 
-        private static void AddWorker()
-        {
-            Console.WriteLine("Введите имя пользователя");
-            string N = Console.ReadLine();
-            Console.WriteLine("Введите роль пользователя");
-            var IR = InputRole();
-            var user = new User(N,IR);
-            List<User> users = new List<User>();
-            users.Add(user);
-            fill.FillFileUser(users, true);
-            
+                Console.WriteLine("Введите отработанное время");
+                int H = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Введите сообщение");
+                string mas = Console.ReadLine();
+                var time = new TimeRecord(DateTime.Now, polzovatel.Name, H, mas);
+                List<TimeRecord> times = new List<TimeRecord>();
+                times.Add(time);
+                fill.FillFileGeneric(times, (int)polzovatel.UserRole, true);
+
+            }
+
+            private static void AddWorker()
+            {
+                Console.WriteLine("Введите имя пользователя");
+                string N = Console.ReadLine();
+                Console.WriteLine("Введите роль пользователя");
+                var IR = InputRole();
+                var user = new User(N, IR);
+                List<User> users = new List<User>();
+                users.Add(user);
+                fill.FillFileUser(users, true);
+
+            }
         }
     }
-}
+
 
 
