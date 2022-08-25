@@ -516,21 +516,24 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             MenuUp();
         }
 
-            private static void AddWorker()
-            {
-                Console.WriteLine("Введите имя пользователя");
-                string N = Console.ReadLine();
-                Console.WriteLine("Введите роль пользователя");
-                var IR = InputRole();
-                var user = new User(N, IR);
-                List<User> users = new List<User>();
-                users.Add(user);
-                fill.FillFileUser(users, true);
+        private static void AddWorker()
+        {
+            Console.WriteLine("Введите имя пользователя");
+            string N = Console.ReadLine();
+            Console.WriteLine("Введите роль пользователя");
+            var IR = InputRole();
+            var user = new User(N, IR);
+            List<User> users = new List<User>();
+            users.Add(user);
+            fill.FillFileUser(users, true);
 
-                MenuUp();
-            }
+            Console.WriteLine("*************************************");
+            fill.ShowAllUsers();
+            Console.WriteLine("*************************************");
+        MenuUp();
         }
     }
+}
 
 
 
