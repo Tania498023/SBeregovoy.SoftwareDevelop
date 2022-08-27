@@ -527,10 +527,38 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             users.Add(user);
             fill.FillFileUser(users, true);
 
-            Console.WriteLine("*************************************");
-            fill.ShowAllUsers();
-            Console.WriteLine("*************************************");
-        MenuUp();
+
+            Dictionary<UserRole, List<string>> groupworkrep = new Dictionary<UserRole, List<string>>();
+            
+            var groupuser = fill.ReadFileUser();
+            foreach (var groupitem in groupuser)
+            {
+                if (!groupworkrep.ContainsKey(groupitem.UserRole))//проверяем наличие Ключа, если его нет
+                {
+                    groupworkrep.Add(groupitem.UserRole, new List<string>());// то добавляем ключ, а значение пока еще пустое!!!
+                    groupworkrep[groupitem.UserRole].Add(groupitem.Name);//после добавления ключа, добавляем Значение по вышедобавленному ключу
+                }
+                else//иначе ключ есть
+                {
+                    groupworkrep[groupitem.UserRole].Add(groupitem.Name);//просто добавляем Значение по существующему ключу
+
+                }
+            }
+
+            foreach (var groupwork in groupworkrep)
+            {
+                Console.WriteLine("-------------------------");
+                Console.WriteLine(groupwork.Key);
+                Console.WriteLine("-------------------------");
+
+                foreach (var item in groupwork.Value)
+                {
+                    Console.WriteLine(item);
+                   
+                }
+            }
+            Console.WriteLine("-------------------------");
+            MenuUp();
         }
     }
 }

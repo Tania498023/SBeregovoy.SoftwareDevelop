@@ -130,14 +130,7 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
             return null;
         }
 
-        public void ShowAllUsers( )
-        {
-            foreach (var record in ReadFileUser())
-            {
-                Console.WriteLine(record.Name + "   " + record.UserRole);
-            }
-           
-        }
+
         public List<TimeRecord> ReportGet(UserRole userRole, DateTime? from = null, DateTime? to = null)
         {
             var records = ReadFileGeneric((int)userRole);
