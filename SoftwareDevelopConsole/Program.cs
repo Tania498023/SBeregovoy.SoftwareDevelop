@@ -12,13 +12,8 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
 {
     internal class Program
     {
-        private static UserRole enteruser;
         static FileRepository fill;
         private static User polzovatel;
-
-
-        //public static DateTime enddate;
-        //public static DateTime startdate;
 
         static void Main(string[] args)
 
@@ -54,6 +49,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
 
         private static UserRole InputRole()
         {
+            UserRole enteruser = default;
             do
             {
                 Console.WriteLine("Введите роль \n Введите 0, если менеджер \n Введите 1, если сотрудник \n Введите 2, если фрилансер");
@@ -79,6 +75,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
 
 
             } while (enteruser < UserRole.Manager || enteruser > UserRole.Frelanser);
+           
             return enteruser;
         }
 
@@ -466,15 +463,15 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
 
             if (choice == "y")
             {
-                if (enteruser == UserRole.Manager)
+                if (polzovatel.UserRole == UserRole.Manager)
                 {
                     Showmanagermenu();
                 }
-                if (enteruser == UserRole.Frelanser)
+                if (polzovatel.UserRole == UserRole.Frelanser)
                 {
                     Showfrilansermenu();
                 }
-                if (enteruser == UserRole.Employee)
+                if (polzovatel.UserRole == UserRole.Employee)
                 {
                     Showemployeemenu();
                 }
