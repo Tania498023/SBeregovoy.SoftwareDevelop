@@ -46,6 +46,7 @@ namespace SBeregovoy.SoftwareDevelop.Domain
                 if (item.Date >= startdates && item.Date <= enddates)
                     if (base.Name == item.Name)
                     {
+                        Console.WriteLine($"Отчет по сотруднику {base.Name} за период c {startdates.Date.ToString("d")} по {enddates.Date.ToString("d")}");
                         Console.WriteLine(item.Date + "\t" + item.Hours + "\t" + item.Message);
                         sumhour += item.Hours;
                     }

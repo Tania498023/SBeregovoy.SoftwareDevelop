@@ -426,6 +426,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                 }
                 else
                 {
+                    Console.WriteLine("Вы вводите некорректные данные");
                     continue;
                 }
                 Console.WriteLine("Введите дату окончания отчета");
@@ -435,6 +436,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                 }
                 else
                 {
+                    Console.WriteLine("Вы вводите некорректные данные");
                     continue;
                 }
                  
@@ -448,16 +450,27 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             }
             while (true);
 
-
-            Console.WriteLine("Введите пользователя");
-
-            string inputstring = Console.ReadLine();
-            var rephour = fill.UserGet(inputstring);
-
-            if (rephour == null)
+            User rephour;
+            do
             {
-                Console.WriteLine("Пользователь не существует");
+                Console.WriteLine("---------------------");
+                Console.WriteLine("Введите пользователя");
+                
+
+                string inputstring = Console.ReadLine();
+                Console.WriteLine("---------------------");
+                rephour = fill.UserGet(inputstring);
+
+                if (rephour == null)
+                {
+                    Console.WriteLine("Пользователь не существует");
+                }
+                else
+                {
+                    break;
+                }
             }
+            while (true);
 
             var HH = fill.ReadFileGeneric((int)rephour.UserRole);
             if (rephour.UserRole == UserRole.Manager)
