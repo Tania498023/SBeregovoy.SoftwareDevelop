@@ -53,27 +53,30 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             do
             {
                 Console.WriteLine("Введите роль \n Введите 0, если менеджер \n Введите 1, если сотрудник \n Введите 2, если фрилансер");
-                int controleRole = Convert.ToInt32(Console.ReadLine());
+                int controleRole = 0;
 
-                if (controleRole == (int)UserRole.Manager)
+                if (Int32.TryParse(Console.ReadLine(), out controleRole))
                 {
-                    enteruser = UserRole.Manager;
-                    break;
-                }
-                else if (controleRole == (int)UserRole.Employee)
-                {
-                    enteruser = UserRole.Employee;
-                    break;
-                }
-                else if (controleRole == (int)UserRole.Frelanser)
-                {
-                    enteruser = UserRole.Frelanser;
-                    break;
-                }
-                else
-                    Console.WriteLine("Вы ввели несуществующую роль");
 
+                    if (controleRole == (int)UserRole.Manager)
+                    {
+                        enteruser = UserRole.Manager;
+                        break;
+                    }
+                    else if (controleRole == (int)UserRole.Employee)
+                    {
+                        enteruser = UserRole.Employee;
+                        break;
+                    }
+                    else if (controleRole == (int)UserRole.Frelanser)
+                    {
+                        enteruser = UserRole.Frelanser;
+                        break;
+                    }
+                    else
+                        Console.WriteLine("Вы ввели несуществующую роль");
 
+                }
             } while (enteruser < UserRole.Manager || enteruser > UserRole.Frelanser);
            
             return enteruser;
@@ -120,38 +123,41 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                     "Введите 4, если вы хотите посмотреть часы работы сотрудника \n " +
                     "Введите 0, если вы хотите выйти из программы");
 
-                actionmanager = Convert.ToInt32(Console.ReadLine());
 
-                if (actionmanager == 1)
-                {
-                    AddWorker();
-                    break;
-                }
-                else if (actionmanager == 2)
-                {
-                    AddWorkerHour();
-                    break;
-                }
-                else if (actionmanager == 3)
+                if (Int32.TryParse(Console.ReadLine(), out actionmanager))
                 {
 
-                    WatchWorkerReport();
-                    break;
-                }
-                else if (actionmanager == 4)
-                {
+                    if (actionmanager == 1)
+                    {
+                        AddWorker();
+                        break;
+                    }
+                    else if (actionmanager == 2)
+                    {
+                        AddWorkerHour();
+                        break;
+                    }
+                    else if (actionmanager == 3)
+                    {
 
-                    WatchWorkerHour();
-                    break;
-                }
-                else if (actionmanager == 0)
-                {
+                        WatchWorkerReport();
+                        break;
+                    }
+                    else if (actionmanager == 4)
+                    {
 
-                    Exitprogram();
-                    break;
+                        WatchWorkerHour();
+                        break;
+                    }
+                    else if (actionmanager == 0)
+                    {
+
+                        Exitprogram();
+                        break;
+                    }
+                    else
+                        Console.WriteLine("Вы выбрали несуществующее действие");
                 }
-                else
-                    Console.WriteLine("Вы выбрали несуществующее действие");
             }
 
             while ((actionmanager < 1 || actionmanager > 4) && actionmanager != 0);
@@ -165,20 +171,22 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                     "Введите 1, если вы хотите ввести часы \n " +
                     "Введите 2, если вы хотите просмотреть часы");
 
-                actionemployee = Convert.ToInt32(Console.ReadLine());
+                if (Int32.TryParse(Console.ReadLine(), out actionemployee))
+                {
 
-                if (actionemployee == 1)
-                {
-                    AddEmployeeHour();
-                    break;
+                    if (actionemployee == 1)
+                    {
+                        AddEmployeeHour();
+                        break;
+                    }
+                    else if (actionemployee == 2)
+                    {
+                        WatchEmployeeHour();
+                        break;
+                    }
+                    else
+                        Console.WriteLine("Вы выбрали несуществующее действие");
                 }
-                else if (actionemployee == 2)
-                {
-                    WatchEmployeeHour();
-                    break;
-                }
-                else
-                    Console.WriteLine("Вы выбрали несуществующее действие");
             }
 
             while (actionemployee < 1 || actionemployee > 2);
@@ -192,20 +200,22 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                     "Введите 1, если вы хотите ввести часы \n " +
                     "Введите 2, если вы хотите просмотреть часы");
 
-                actionfrilanser = Convert.ToInt32(Console.ReadLine());
+                if (Int32.TryParse(Console.ReadLine(), out actionfrilanser))
+                {
 
-                if (actionfrilanser == 1)
-                {
-                    AddFrilanserHour();
-                    break;
+                    if (actionfrilanser == 1)
+                    {
+                        AddFrilanserHour();
+                        break;
+                    }
+                    else if (actionfrilanser == 2)
+                    {
+                        WatchFrilanserHour();
+                        break;
+                    }
+                    else
+                        Console.WriteLine("Вы выбрали несуществующее действие");
                 }
-                else if (actionfrilanser == 2)
-                {
-                    WatchFrilanserHour();
-                    break;
-                }
-                else
-                    Console.WriteLine("Вы выбрали несуществующее действие");
             }
 
             while (actionfrilanser < 1 || actionfrilanser > 2);
@@ -246,22 +256,24 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             do
             {
                 Console.WriteLine("Введите отработанное время");
-                H = Convert.ToInt32(Console.ReadLine());
-                if (H <= 0 || H >= 24)
+                if (Int32.TryParse(Console.ReadLine(), out H))
                 {
-                    Console.WriteLine("Вы вводите некорректные данные");
+                    if (H <= 0 || H >= 24)
+                    {
+                        Console.WriteLine("Вы вводите некорректные данные");
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("Введите сообщение");
+                        string mas = Console.ReadLine();
+                        var time = new TimeRecord(DateTime.Now, polzovatel.Name, H, mas);
+                        List<TimeRecord> times = new List<TimeRecord>();
+                        times.Add(time);
+                        fill.FillFileGeneric(times, (int)polzovatel.UserRole, true);
+                    }
 
                 }
-                else
-                {
-                    Console.WriteLine("Введите сообщение");
-                    string mas = Console.ReadLine();
-                    var time = new TimeRecord(DateTime.Now, polzovatel.Name, H, mas);
-                    List<TimeRecord> times = new List<TimeRecord>();
-                    times.Add(time);
-                    fill.FillFileGeneric(times, (int)polzovatel.UserRole, true);
-                }
-
             }
             while (H <= 0 || H >= 24);
         }
@@ -287,10 +299,23 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             do
             {
                 Console.WriteLine("Введите дату начала отчета");
-                startdate = Convert.ToDateTime(Console.ReadLine());
-                Console.WriteLine("Введите дату окончания отчета");
-                enddate = Convert.ToDateTime(Console.ReadLine());
+                if (DateTime.TryParse(Console.ReadLine(), out startdate))
+                {
 
+                }
+                else
+                {
+                    continue;
+                }
+                Console.WriteLine("Введите дату окончания отчета");
+                 if(DateTime.TryParse(Console.ReadLine(), out enddate))
+                {
+
+                }
+                 else
+                {
+                    continue;
+                }
                 if (enddate < startdate)
                 {
                     Console.WriteLine("Вы  вводите некорректную дату");
@@ -395,10 +420,24 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             do
             {
                 Console.WriteLine("Введите дату начала отчета");
-                startdate = Convert.ToDateTime(Console.ReadLine());
+                if(DateTime.TryParse(Console.ReadLine(), out startdate))
+                {
+                    
+                }
+                else
+                {
+                    continue;
+                }
                 Console.WriteLine("Введите дату окончания отчета");
-                enddate = Convert.ToDateTime(Console.ReadLine());
+                if (DateTime.TryParse(Console.ReadLine(), out enddate))
+                {
 
+                }
+                else
+                {
+                    continue;
+                }
+                 
                 if (enddate < startdate)
                 {
                     Console.WriteLine("Вы  вводите некорректную дату");
@@ -502,14 +541,15 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                 }
 
                 Console.WriteLine("Введите отработанное время");
-                int H = Convert.ToInt32(Console.ReadLine());
+            if (Int32.TryParse(Console.ReadLine(), out int H))
+            {
                 Console.WriteLine("Введите сообщение");
                 string mas = Console.ReadLine();
                 var time = new TimeRecord(DateTime.Now, polzovatel.Name, H, mas);
                 List<TimeRecord> times = new List<TimeRecord>();
                 times.Add(time);
                 fill.FillFileGeneric(times, (int)polzovatel.UserRole, true);
-
+            }
             MenuUp();
         }
 
