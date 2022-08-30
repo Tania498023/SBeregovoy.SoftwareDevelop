@@ -65,9 +65,13 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
         }
         public List<User> ReadFileUser()
         {
+            var defaultuser = new User("defaultuser", UserRole.Manager);
+            var tmplist = new List<User>();
+            tmplist.Add(defaultuser);
+
             string userpath = @".\Data\User.csv";
             if (!File.Exists(userpath))
-                return null;
+                return tmplist;
             List<User> users = new List<User>();
 
             var strings = File.ReadAllLines(userpath);//получили массив строк
@@ -75,12 +79,18 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
 
             foreach (var stroka in strings)
             {
+               if (string.IsNullOrEmpty(stroka) || string.IsNullOrWhiteSpace(stroka))
+                    continue;
                 var plitedstroka = stroka.Split(',');
 
                 strokainenum = (UserRole)Enum.Parse(typeof(UserRole), plitedstroka[1]);
 
                 var user = new User(plitedstroka[0], strokainenum);//создали  объект
                 users.Add(user);// добавили объект в коллекцию
+            }
+            if(users.Count == 0)
+            {
+                return tmplist;
             }
             return users;
         }
