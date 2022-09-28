@@ -49,6 +49,7 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
             System.IO.FileInfo file = new System.IO.FileInfo(newpath);
             long size = file.Length;
 
+
             if (!genericneedwrite && size > 0)
                 return;
 
