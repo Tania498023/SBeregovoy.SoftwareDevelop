@@ -45,6 +45,9 @@
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox7 = new System.Windows.Forms.TextBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.textBox8 = new System.Windows.Forms.TextBox();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // textBox1
@@ -60,7 +63,7 @@
             // 
             this.textBox2.Location = new System.Drawing.Point(177, 159);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(37, 22);
+            this.textBox2.Size = new System.Drawing.Size(48, 22);
             this.textBox2.TabIndex = 1;
             this.textBox2.Text = "часы";
             this.textBox2.Visible = false;
@@ -76,7 +79,7 @@
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(38, 353);
+            this.textBox4.Location = new System.Drawing.Point(38, 370);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(419, 22);
             this.textBox4.TabIndex = 3;
@@ -115,13 +118,14 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(477, 158);
+            this.button2.Location = new System.Drawing.Point(589, 156);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(154, 24);
             this.button2.TabIndex = 7;
             this.button2.Text = "Добавить";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Visible = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
@@ -200,18 +204,38 @@
             // 
             // textBox7
             // 
-            this.textBox7.Location = new System.Drawing.Point(231, 158);
+            this.textBox7.Location = new System.Drawing.Point(351, 156);
             this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(240, 22);
+            this.textBox7.Size = new System.Drawing.Size(180, 22);
             this.textBox7.TabIndex = 24;
-            this.textBox7.Text = "содержание раборт";
+            this.textBox7.Text = "содержание работ";
             this.textBox7.Visible = false;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(38, 187);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidth = 51;
+            this.dataGridView1.RowTemplate.Height = 24;
+            this.dataGridView1.Size = new System.Drawing.Size(950, 106);
+            this.dataGridView1.TabIndex = 25;
+            // 
+            // textBox8
+            // 
+            this.textBox8.Location = new System.Drawing.Point(231, 158);
+            this.textBox8.Name = "textBox8";
+            this.textBox8.Size = new System.Drawing.Size(100, 22);
+            this.textBox8.TabIndex = 27;
+            this.textBox8.Text = "Имя";
             // 
             // ManagerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 473);
+            this.ClientSize = new System.Drawing.Size(1000, 473);
+            this.Controls.Add(this.textBox8);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.textBox7);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dateTimePicker1);
@@ -229,9 +253,11 @@
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "ManagerForm";
             this.Text = "ManagerForm";
+            this.Load += new System.EventHandler(this.ManagerForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -256,5 +282,7 @@
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.TextBox textBox8;
     }
 }
