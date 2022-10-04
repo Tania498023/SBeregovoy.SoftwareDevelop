@@ -72,7 +72,7 @@ namespace WindowsFormsTotalPay
             DB db = new DB();
             DataTable table = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter();
-            string cmd = $"SELECT [Name],[Role] FROM[Beregovoj].[dbo].[users] where [Name] = '{nameUser}'";
+            string cmd = $"SELECT users.[ID],[Name],[Role] FROM [Beregovoj].[dbo].[UserRole] Right JOIN users ON users.IDRole = [UserRole].ID  where [Name] = '{nameUser}'";
             SqlCommand command = new SqlCommand(cmd, db.GetConnection());
             
             adapter.SelectCommand = command;
@@ -96,7 +96,7 @@ namespace WindowsFormsTotalPay
            if(roleform != null)
             {
                 
-                ManagerForm managerForm = new ManagerForm(roleform);
+                ManagerForm managerForm = new ManagerForm(roleform, nameUser);
                 managerForm.Show();
                 
                 this.Visible = false;
