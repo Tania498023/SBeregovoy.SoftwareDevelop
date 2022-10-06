@@ -87,7 +87,7 @@ namespace WindowsFormsTotalPay
                     if(column.ColumnName == "Role")
                     {
                         roleform = row[column].ToString();
-                        //MessageBox.Show(roleform);
+                       
                     }
                    
                 }

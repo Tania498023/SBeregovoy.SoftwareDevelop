@@ -48,7 +48,8 @@ Trusted_Connection=True";
                 button4.Visible = true;
                 listBox1.Visible = true;
                 comboBoxRole.Visible = true;
-               
+                delButton.Visible = true;
+
                 LoadRole();
             }
 
@@ -187,6 +188,7 @@ Trusted_Connection=True"); // создание подключения
 
             listBox1.Items.Clear();
             LoadUsers();
+
         }
         DataTable table = new DataTable();
         private void ManagerForm_Load(object sender, EventArgs e)
@@ -223,28 +225,7 @@ Trusted_Connection=True"); // создание подключения
             dataGridView1.Update();
         }
 
-        /* хранимая процедура
-USE [Beregovoj]
-GO
-Object:  StoredProcedure [dbo].[sp_CreateUser]    Script Date: 30.09.2022 14:21:54 
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-ALTER PROCEDURE[dbo].[sp_CreateUser]
-@date smalldatetime,
-@hours int,
-@name nvarchar(50),
-@Messang nvarchar(50),
-@Idname int,
-@Id int out
-AS
-INSERT INTO Hours([Date], [Name], [Hours], [Messang], [IDName])
-VALUES(@date, @hours, @name, @messang, @Idname)
-
-
-SET @Id = SCOPE_IDENTITY()
-*/
+       
 
 
         private void button2_Click(object sender, EventArgs e)

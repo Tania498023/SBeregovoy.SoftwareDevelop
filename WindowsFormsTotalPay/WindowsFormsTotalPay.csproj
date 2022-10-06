@@ -107,6 +107,7 @@
     <Content Include="Images\1564520_code_open_password_icon%282%29.png" />
     <Content Include="Images\1564520_code_open_password_icon.png" />
     <Content Include="Images\285655_user_icon.png" />
+    <Content Include="SQL\CreateTables.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
