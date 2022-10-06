@@ -36,6 +36,7 @@
             this.secondpanel = new System.Windows.Forms.Panel();
             this.CloseButton = new System.Windows.Forms.Label();
             this.namelabel = new System.Windows.Forms.Label();
+            this.messageQueue1 = new System.Messaging.MessageQueue();
             this.MainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.secondpanel.SuspendLayout();
@@ -132,6 +133,12 @@
             this.namelabel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.namelabel_MouseDown);
             this.namelabel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.namelabel_MouseMove);
             // 
+            // messageQueue1
+            // 
+            this.messageQueue1.DefaultPropertiesToSend.HashAlgorithm = System.Messaging.HashAlgorithm.Sha512;
+            this.messageQueue1.MessageReadPropertyFilter.LookupId = true;
+            this.messageQueue1.SynchronizingObject = this;
+            // 
             // NameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -158,5 +165,6 @@
         private System.Windows.Forms.TextBox loginField;
         private System.Windows.Forms.Button ButtonName;
         private System.Windows.Forms.Label namelabel;
+        private System.Messaging.MessageQueue messageQueue1;
     }
 }

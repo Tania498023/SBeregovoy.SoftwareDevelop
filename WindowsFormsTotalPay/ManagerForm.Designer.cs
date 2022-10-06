@@ -37,7 +37,6 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
             this.delButton = new System.Windows.Forms.Button();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
@@ -48,6 +47,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -58,8 +58,6 @@
             this.textBox1.Size = new System.Drawing.Size(169, 22);
             this.textBox1.TabIndex = 0;
             this.textBox1.Visible = false;
-            this.textBox1.MouseEnter += new System.EventHandler(this.textBox1_MouseEnter);
-            this.textBox1.MouseLeave += new System.EventHandler(this.textBox1_MouseLeave);
             // 
             // textBox2
             // 
@@ -95,7 +93,6 @@
             this.listBox1.Size = new System.Drawing.Size(151, 68);
             this.listBox1.TabIndex = 5;
             this.listBox1.Visible = false;
-            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // button1
             // 
@@ -122,7 +119,7 @@
             // 
             this.button3.Location = new System.Drawing.Point(477, 375);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(154, 22);
+            this.button3.Size = new System.Drawing.Size(154, 33);
             this.button3.TabIndex = 8;
             this.button3.Text = "Сформировать";
             this.button3.UseVisualStyleBackColor = true;
@@ -130,23 +127,13 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(477, 439);
+            this.button4.Location = new System.Drawing.Point(477, 424);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(154, 22);
+            this.button4.Size = new System.Drawing.Size(154, 37);
             this.button4.TabIndex = 9;
             this.button4.Text = "Сформировать";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Visible = false;
-            // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(757, -1);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(43, 24);
-            this.button6.TabIndex = 20;
-            this.button6.Text = "x";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // delButton
             // 
@@ -227,24 +214,34 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(217, 128);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(39, 16);
+            this.label4.Size = new System.Drawing.Size(40, 16);
             this.label4.TabIndex = 29;
-            this.label4.Text = "часы";
+            this.label4.Text = "Часы";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(395, 128);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(55, 16);
+            this.label5.Size = new System.Drawing.Size(56, 16);
             this.label5.TabIndex = 30;
-            this.label5.Text = "работы";
+            this.label5.Text = "Работы";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(105, 128);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(39, 16);
+            this.label6.TabIndex = 31;
+            this.label6.Text = "Дата";
             // 
             // ManagerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(846, 473);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -255,7 +252,6 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.delButton);
-            this.Controls.Add(this.button6);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
@@ -268,6 +264,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "ManagerForm";
             this.Text = "ManagerForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ManagerForm_FormClosing);
             this.Load += new System.EventHandler(this.ManagerForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
@@ -286,7 +283,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button delButton;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Label label1;
@@ -297,5 +293,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
     }
 }

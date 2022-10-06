@@ -19,21 +19,18 @@ namespace WindowsFormsTotalPay
     {
         private readonly string roleform;
         private string UserName;
+       
         private string DbString = @"
 Server=(LocalDB)\mssqllocaldb;
 Database=Beregovoj;
 Trusted_Connection=True";
 
-        public ManagerForm()
-        {
-            
-        }
-
-        public ManagerForm(string _roleform, string name)
+        
+        public ManagerForm(string roles, string name)
         {
             InitializeComponent();
-            this.roleform = _roleform;
-            this.UserName = name;
+            roleform = roles;
+            UserName = name;
            
             //добавить лейбл на форму и присвоить ему полученную роль
             if (roleform == "manager")
@@ -42,16 +39,16 @@ Trusted_Connection=True";
                 textBox2.Visible = true;
                 textBox3.Visible = true;
                 textBox4.Visible = true;
-                
+                label2.Visible = true;
                 textBox7.Visible = true;
-               
+                label3.Visible = true;
                 button1.Visible = true;
                 button2.Visible = true;
                 button3.Visible = true;
                 button4.Visible = true;
                 listBox1.Visible = true;
                 comboBoxRole.Visible = true;
-                LoadUsers();
+               
                 LoadRole();
             }
 
@@ -59,40 +56,42 @@ Trusted_Connection=True";
             {
                 
                 textBox2.Visible = true;
-               
+                
                 button2.Visible = true;
-             
+                
 
             }
+            LoadUsers();
         }
 
-        private  void LoadUsers()
+        DataTable tableUsers = new DataTable();
+        private  void LoadUsers()//загружаем имя пользователя(usera) в listBox1
         {
             DB db = new DB();
-            DataTable table = new DataTable();
+           
             SqlDataAdapter adapter = new SqlDataAdapter();
           //  [ID] из запроса не удаляем, используется дальше в коде
             string cmd = $"SELECT users.[ID],[Name],[Role] FROM [Beregovoj].[dbo].[UserRole] Right JOIN users ON users.IDRole = [UserRole].ID ";
             SqlCommand command = new SqlCommand(cmd, db.GetConnection());
 
             adapter.SelectCommand = command;
-            adapter.Fill(table);
+            adapter.Fill(tableUsers);
             
-            foreach (DataRow row in table.Rows)
+            foreach (DataRow row in tableUsers.Rows)//в первом цикле это первая строка
             {
-                string r = "";
-                int r1 = 0;
-                string role = "";
-                foreach (DataColumn column in table.Columns)
+                string us = "";
+                int us1 = 0;
+                string usn = "";
+                foreach (DataColumn column in tableUsers.Columns)
                 {
 
-                    role = row[column].ToString();
+                    usn = row[column].ToString();
                         
-                        r += role + ",";
+                        us += usn + " ";
 
-                        r1++;
-                        if(r1 == 2)
-                            listBox1.Items.Add(r);
+                        us1++;
+                        if(us1 == 2)
+                            listBox1.Items.Add(us);
          
                 }
 
@@ -109,7 +108,7 @@ Trusted_Connection=True";
             string cmd = $"SELECT [ID],[Role] FROM [Beregovoj].[dbo].[UserRole] ";
             SqlCommand command = new SqlCommand(cmd, db.GetConnection());
 
-            string role = "";
+            string role;
 
             adapter.SelectCommand = command;
             adapter.Fill(table);
@@ -168,12 +167,11 @@ Trusted_Connection=True"); // создание подключения
             listBox1.Items.Clear();
             LoadUsers();
 
+            DialogeCheck();
+        
         }
 
-        private void button6_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
+        
 
         private void delButton_Click(object sender, EventArgs e)
         {
@@ -251,17 +249,42 @@ SET @Id = SCOPE_IDENTITY()
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if(listBox1.SelectedItem == null)
+            /*
+             проверяем, что зашли под менеджером и выбран ли элемент listBox1.
+            получаем ID выбранного элемента(usera)
+
+            входные данные-roleform для проверки роли
+
+            входные данные- UserName
+            входные данные-таблица tableUsers
+
+            выходные данные ID (пользователя)
+             */
+            int IDUser = 0;
+            DT IDnew = new DT();
+
+            if (roleform == "manager" && listBox1.SelectedItem != null)
+            {
+
+                var IDString = listBox1.SelectedItem.ToString().Split(' ')[0];//поллучаем ID в виде строки из выбранного элемента listBox1
+                IDUser = Int32.Parse(IDString);
+            }
+            else if (roleform != "manager")
+            {
+
+                IDUser = IDnew.ChekRole(tableUsers, UserName);//вызываем метод класса DT через созданный экземпляр IDnew класса DT,
+                                                              //передаем в него параметры, присваиваем значение в переменную IDUser
+            }
+            else
             {
                 MessageBox.Show("Пользователь не выбран!");
                 return;
             }
-           var IDString = listBox1.SelectedItem.ToString().Split(',')[0];//поллучаем ID в виде строки из выбранного элемента listBox1
-            int IDUser = Int32.Parse(IDString);
+
             //данные из контролов сохраняем в переменные  
             var inputDate = Convert.ToDateTime(dateTimePicker1.Text);//конвертируем тип
             var inputHour = Convert.ToInt32(textBox2.Text);//конвертируем тип
-            
+
 
 
             string inputMessang = textBox7.Text;
@@ -272,7 +295,7 @@ SET @Id = SCOPE_IDENTITY()
 
 
             SqlCommand insertCommand = connection.CreateCommand(); // создание команды на вставку данных
-         
+
             insertCommand.CommandText = $"INSERT INTO Hours ([Date],[Hours],[Messang],[IDName]) VALUES ( @p1, @p2, @p3, @p4 )";//создаем запрос на вставку данных
             //подготовка данных для SQL сервера
             DbParameter pio = insertCommand.CreateParameter();
@@ -286,7 +309,7 @@ SET @Id = SCOPE_IDENTITY()
             pio.DbType = DbType.Int32;
             pio.Value = inputHour;
             insertCommand.Parameters.Add(pio);
-                        
+
             pio = insertCommand.CreateParameter();
             pio.ParameterName = "@p3";
             pio.DbType = DbType.String;
@@ -301,26 +324,33 @@ SET @Id = SCOPE_IDENTITY()
 
             int rowAffected = insertCommand.ExecuteNonQuery(); // выполнение команды на вставку
             connection.Close();
-     
+
             LoadDataForGreed();
-
-           
-        }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
+            DialogeCheck();
 
         }
 
-        private void textBox1_MouseEnter(object sender, EventArgs e)
+        private static void DialogeCheck()
         {
+            DialogResult result = MessageBox.Show(
+                     "Желаете продолжить?",
+                     "Сообщение",
+                     MessageBoxButtons.OKCancel);
 
-          //  textBox1.Clear();
+            if (result == DialogResult.OK)
+            {
+                ManagerForm.ActiveForm.Activate();
+            }
+            else
+            {
+                Environment.Exit(0);
+            }
         }
 
-        private void textBox1_MouseLeave(object sender, EventArgs e)
+        private void ManagerForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            textBox1.ResetText();
+            Environment.Exit(0);
+
         }
     }
 }
