@@ -3,7 +3,12 @@
    Задачи -> Сформировать скрипты..
     Из списка выбираешь свою таблицу(ы), выбираешь "Открыть в новом окне запроса"
     На этой же странице жмёшь кнопку "Дополнительно" и в параметре "Тип данных для внесения в скрипт" выбираешь значение "схема и данные" и жмёшь 2 раза "Далее"
+
 	*/
+	USE master 
+	GO
+	CREATE DATABASE Beregovoj
+
 USE [Beregovoj]
 GO
 /****** Object:  Table [dbo].[Hours]    Script Date: 06.10.2022 15:51:41 ******/
@@ -75,22 +80,10 @@ CREATE PROCEDURE [dbo].[sp_CreateUser]
 	@Idname int,
 	@Id int out
 AS
-    INSERT INTO Hours([Date],[Name],[Hours],[Messang],[IDName])
-    VALUES (@date, @hours,@name, @messang, @Idname)
+    INSERT INTO Hours([Date],[Hours],[Messang],[IDName])
+    VALUES (@date, @hours, @messang, @Idname)
   
     SET @Id=SCOPE_IDENTITY()
 GO
 /****** Object:  StoredProcedure [dbo].[sp_InsertUser]    Script Date: 06.10.2022 15:51:41 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE PROCEDURE [dbo].[sp_InsertUser]
-    @name nvarchar(50),
-    @age int
-AS
-    INSERT INTO Users1 (Name, Age)
-    VALUES (@name, @age)
-  
-    SELECT SCOPE_IDENTITY()
-GO
+
