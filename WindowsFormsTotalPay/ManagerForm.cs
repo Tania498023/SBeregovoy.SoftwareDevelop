@@ -24,8 +24,10 @@ namespace WindowsFormsTotalPay
 Server=(LocalDB)\mssqllocaldb;
 Database=Beregovoj;
 Trusted_Connection=True";
+        //строка подключения для внешнего сервера
+        //string conStr = @"Data Source=Serv12; Persist Security Info = False; User ID = sql; Password =  CRKM.pth; Initial Catalog = Beregovoj; ";
 
-        
+
         public ManagerForm(string roles, string name)
         {
             InitializeComponent();
