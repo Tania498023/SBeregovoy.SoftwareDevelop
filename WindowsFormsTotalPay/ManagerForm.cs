@@ -17,25 +17,18 @@ namespace WindowsFormsTotalPay
 {
     public partial class ManagerForm : Form
     {
-        private readonly string roleform;
+        private readonly string MFroles;
         private string UserName;
-       
-        private string DbString = @"
-Server=(LocalDB)\mssqllocaldb;
-Database=Beregovoj;
-Trusted_Connection=True";
-        //строка подключения для внешнего сервера
-        //string conStr = @"Data Source=Serv12; Persist Security Info = False; User ID = sql; Password =  CRKM.pth; Initial Catalog = Beregovoj; ";
-
-
+ 
+        
         public ManagerForm(string roles, string name)
         {
             InitializeComponent();
-            roleform = roles;
+            this.MFroles = roles;
             UserName = name;
            
             //добавить лейбл на форму и присвоить ему полученную роль
-            if (roleform == "manager")
+            if (this.MFroles == "manager")
             {
                 textBox1.Visible = true;
                 textBox2.Visible = true;
@@ -55,11 +48,11 @@ Trusted_Connection=True";
                 LoadRole();
             }
 
-            if (roleform == "freelanser" || roleform == "employee")
+            if (this.MFroles == "freelanser" || this.MFroles == "employee")
             {
-                
+
                 textBox2.Visible = true;
-                
+
                 button2.Visible = true;
                 
 
@@ -179,7 +172,7 @@ Trusted_Connection=True"); // создание подключения
         private void delButton_Click(object sender, EventArgs e)
         {
             var del = listBox1.SelectedItem.ToString().Split(',')[0];
-            SqlConnection connection = new SqlConnection(DbString); // создание подключения
+            SqlConnection connection = new SqlConnection(DB.connect); // создание подключения
             connection.Open();
 
             SqlCommand insertCommand = connection.CreateCommand(); 
@@ -205,7 +198,7 @@ Trusted_Connection=True"); // создание подключения
 
             //дописать условие, если не менеджер, то в запросе будет передаваться Name из Nameform!
             //объединяет таблицу Hours и users по столбцу ID и IDName
-            if (roleform == "manager")
+            if (MFroles == "manager")
             {
                 commandString =
                "SELECT [Date],[Hours],users.[Name],[Messang]" +
@@ -221,7 +214,7 @@ Trusted_Connection=True"); // создание подключения
             }
 
 
-            var adapter = new SqlDataAdapter(commandString, DbString);
+            var adapter = new SqlDataAdapter(commandString, DB.connect);
 
             adapter.Fill(table);
             dataGridView1.Update();
@@ -246,13 +239,13 @@ Trusted_Connection=True"); // создание подключения
             int IDUser = 0;
             DT IDnew = new DT();
 
-            if (roleform == "manager" && listBox1.SelectedItem != null)
+            if (MFroles == "manager" && listBox1.SelectedItem != null)
             {
 
                 var IDString = listBox1.SelectedItem.ToString().Split(' ')[0];//поллучаем ID в виде строки из выбранного элемента listBox1
                 IDUser = Int32.Parse(IDString);
             }
-            else if (roleform != "manager")
+            else if (MFroles != "manager")
             {
 
                 IDUser = IDnew.ChekRole(tableUsers, UserName);//вызываем метод класса DT через созданный экземпляр IDnew класса DT,
@@ -272,7 +265,7 @@ Trusted_Connection=True"); // создание подключения
 
             string inputMessang = textBox7.Text;
 
-            SqlConnection connection = new SqlConnection(DbString); // создание подключения
+            SqlConnection connection = new SqlConnection(DB.connect); // создание подключения
             connection.Open();
 
 

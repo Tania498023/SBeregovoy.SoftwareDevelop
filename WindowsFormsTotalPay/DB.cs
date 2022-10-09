@@ -10,10 +10,14 @@ namespace WindowsFormsTotalPay
 {
     internal class DB
     {
-        static string connect = @"
+        public static string connect = @"
 Server=(LocalDB)\mssqllocaldb;
 Database=Beregovoj;
 Trusted_Connection=True";
+        //строка подключения для внешнего сервера
+        //string conStr = @"Data Source=Serv12; Persist Security Info = False; User ID = sql; Password =  CRKM.pth; Initial Catalog = Beregovoj; ";
+
+
 
         SqlConnection connection = new SqlConnection(connect);
 

@@ -65,6 +65,7 @@ namespace WindowsFormsTotalPay
             lastPoint = new Point(e.X, e.Y);
         }
 
+        //найти имя по переданной строке в loginField. В наборе полученных данных найти роль вошедшего пользователя для определения доступа в ManagerForm и соответствующего меню.  
         private void ButtonName_Click(object sender, EventArgs e)
         {
             string nameUser = loginField.Text;
