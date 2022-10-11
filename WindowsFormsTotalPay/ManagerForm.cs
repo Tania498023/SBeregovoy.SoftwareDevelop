@@ -19,17 +19,20 @@ namespace WindowsFormsTotalPay
     {
         private readonly string MFroles;
         private string UserName;
- 
-        
+
+        DataTable tableUsers = new DataTable();
+        DataTable tableRole = new DataTable();
+        DataTable tableGreed = new DataTable();
         public ManagerForm(string roles, string name)
         {
             InitializeComponent();
-            this.MFroles = roles;
+            MFroles = roles;
             UserName = name;
            
             //добавить лейбл на форму и присвоить ему полученную роль
-            if (this.MFroles == "manager")
+            if (MFroles == "manager")
             {
+
                 textBox1.Visible = true;
                 textBox2.Visible = true;
                 textBox3.Visible = true;
@@ -48,46 +51,40 @@ namespace WindowsFormsTotalPay
                 LoadRole();
             }
 
-            if (this.MFroles == "freelanser" || this.MFroles == "employee")
+            if (MFroles == "freelanser" || MFroles == "employee")
             {
 
                 textBox2.Visible = true;
-
                 button2.Visible = true;
-                
-
+          
             }
             LoadUsers();
         }
 
-        DataTable tableUsers = new DataTable();
+
+       
         private  void LoadUsers()//загружаем имя пользователя(usera) в listBox1
         {
-            DB db = new DB();
-           
-            SqlDataAdapter adapter = new SqlDataAdapter();
-          //  [ID] из запроса не удаляем, используется дальше в коде
             string cmd = $"SELECT users.[ID],[Name],[Role] FROM [Beregovoj].[dbo].[UserRole] Right JOIN users ON users.IDRole = [UserRole].ID ";
-            SqlCommand command = new SqlCommand(cmd, db.GetConnection());
 
-            adapter.SelectCommand = command;
-            adapter.Fill(tableUsers);
-            
+            FeelTables(ref tableUsers, cmd);
+
             foreach (DataRow row in tableUsers.Rows)//в первом цикле это первая строка
             {
-                string us = "";
-                int us1 = 0;
-                string usn = "";
+
+                string summuser = "";
+                int indexofword = 0;
+                string Usr = "";
                 foreach (DataColumn column in tableUsers.Columns)
                 {
 
-                    usn = row[column].ToString();
-                        
-                        us += usn + " ";
+                    Usr = row[column].ToString();
 
-                        us1++;
-                        if(us1 == 2)
-                            listBox1.Items.Add(us);
+                    summuser += Usr + " ";
+
+                    indexofword++;
+                        if(indexofword == 2)
+                            listBox1.Items.Add(summuser);
          
                 }
 
@@ -95,34 +92,31 @@ namespace WindowsFormsTotalPay
             
             
         }
+        
         private void LoadRole()
         {
-            DB db = new DB();
-            DataTable table = new DataTable();
-            SqlDataAdapter adapter = new SqlDataAdapter();
+            
             //  [ID] из запроса не удаляем, используется дальше в коде
             string cmd = $"SELECT [ID],[Role] FROM [Beregovoj].[dbo].[UserRole] ";
-            SqlCommand command = new SqlCommand(cmd, db.GetConnection());
 
-            string role;
+            FeelTables(ref tableRole, cmd);
 
-            adapter.SelectCommand = command;
-            adapter.Fill(table);
-
-            foreach (DataRow row in table.Rows)
+            
+            foreach (DataRow row in tableRole.Rows)
             {
-                string r = "";
-                int r1 = 0;
-                foreach (DataColumn column in table.Columns)
+                string role;
+                string summrole = "";
+                int indexofword= 0;
+                foreach (DataColumn column in tableRole.Columns)
                 {
 
                     role = row[column].ToString();
 
-                    r += role + ",";
+                    summrole += role + ",";
 
-                    r1++;
-                    if (r1 == 2)
-                        comboBoxRole.Items.Add(r);
+                    indexofword++;
+                    if (indexofword == 2)
+                        comboBoxRole.Items.Add(summrole);
 
                 }
 
@@ -130,29 +124,35 @@ namespace WindowsFormsTotalPay
 
 
         }
+
+        private void FeelTables(ref DataTable table, string cmd)
+        {
+            DB db = new DB();
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            SqlCommand command = new SqlCommand(cmd, db.GetConnection());
+            adapter.SelectCommand = command;
+            adapter.Fill(table);
+        }
+
         //сформировать запрос с полученными переменными и выполнить запрос к БД с Инсерт для записи данных
         //очистить ЛистБокс
         //загрузить из БД новый набор данных и добавить его в ТекстБокс
         private void button1_Click(object sender, EventArgs e)
         {
+            
+            string inputName= textBox1.Text;
+         
+            var RoleString = comboBoxRole.SelectedItem.ToString().Split(',')[0];
+            int RoleUser = Int32.Parse(RoleString);
+
             if (comboBoxRole.SelectedItem == null)
             {
                 MessageBox.Show("Роль не выбрана!");
                 return;
             }
-            string inputName= textBox1.Text;
-           
 
-            var RoleString = comboBoxRole.SelectedItem.ToString().Split(',')[0];
-            int RoleUser = Int32.Parse(RoleString);
-
-            SqlConnection connection = new SqlConnection(@"
-Server=(LocalDB)\mssqllocaldb;
-Database=Beregovoj;
-Trusted_Connection=True"); // создание подключения
+            SqlConnection connection = new SqlConnection(DB.connect); // создание подключения
             connection.Open();
-
-            
 
             SqlCommand insertCommand = connection.CreateCommand(); // создание команды на вставку данных
             insertCommand.CommandText = $"INSERT INTO users ([Name],[IDRole]) VALUES ('{inputName}', '{RoleUser}')";
@@ -161,8 +161,8 @@ Trusted_Connection=True"); // создание подключения
             connection.Close();
             
             listBox1.Items.Clear();
-            LoadUsers();
 
+            LoadUsers();
             DialogeCheck();
         
         }
@@ -185,16 +185,16 @@ Trusted_Connection=True"); // создание подключения
             LoadUsers();
 
         }
-        DataTable table = new DataTable();
+       
         private void ManagerForm_Load(object sender, EventArgs e)
         {
             LoadDataForGreed();
-            dataGridView1.DataSource = table;//обновление dataGridView1 из таблицы SQL
+            dataGridView1.DataSource = tableGreed;//обновление dataGridView1 из таблицы SQL
         }
 
         private void LoadDataForGreed()
         {
-            string commandString = "";
+            string commandString;
 
             //дописать условие, если не менеджер, то в запросе будет передаваться Name из Nameform!
             //объединяет таблицу Hours и users по столбцу ID и IDName
@@ -213,10 +213,8 @@ Trusted_Connection=True"); // создание подключения
 
             }
 
-
-            var adapter = new SqlDataAdapter(commandString, DB.connect);
-
-            adapter.Fill(table);
+            FeelTables(ref tableGreed, commandString);
+            
             dataGridView1.Update();
         }
 
@@ -236,7 +234,7 @@ Trusted_Connection=True"); // создание подключения
 
             выходные данные ID (пользователя)
              */
-            int IDUser = 0;
+        int IDUser;
             DT IDnew = new DT();
 
             if (MFroles == "manager" && listBox1.SelectedItem != null)

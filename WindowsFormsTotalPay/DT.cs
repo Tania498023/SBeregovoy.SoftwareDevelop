@@ -13,7 +13,7 @@ namespace WindowsFormsTotalPay
         public int ChekRole(DataTable Tbl, string Names)
         {
             int IDUser = 0;
-            int IDnew = 0;
+            
 
             List<string> id = new List<string>();
 
@@ -49,22 +49,7 @@ namespace WindowsFormsTotalPay
 
         }
 
-        // foreach (DataRow row in tableUsers.Rows)//в первом цикле это первая строка
-        //    {
-        //        string us = "";
-        //        int us1 = 0;
-        //        string usn = "";
-        //        foreach (DataColumn column in tableUsers.Columns)
-        //        {
-
-        //            usn = row[column].ToString();
-
-        //us += usn + " ";
-
-        //                us1++;
-        //                if(us1 == 2)
-        //                    listBox1.Items.Add(us);
-         
+       
 
     }
 }
