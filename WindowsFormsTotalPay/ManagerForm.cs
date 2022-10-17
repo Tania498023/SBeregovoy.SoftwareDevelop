@@ -139,9 +139,9 @@ namespace WindowsFormsTotalPay
         //загрузить из БД новый набор данных и добавить его в ТекстБокс
         private void button1_Click(object sender, EventArgs e)
         {
-            
-            string inputName= textBox1.Text;
-         
+
+            string inputName = textBox1.Text;
+
             var RoleString = comboBoxRole.SelectedItem.ToString().Split(',')[0];
             int RoleUser = Int32.Parse(RoleString);
 
@@ -150,39 +150,37 @@ namespace WindowsFormsTotalPay
                 MessageBox.Show("Роль не выбрана!");
                 return;
             }
+            var cmdstring = $"INSERT INTO users ([Name],[IDRole]) VALUES ('{inputName}', '{RoleUser}')";
+            EcxecSqlCmd(cmdstring);
 
+            DialogeCheck();
+
+        }
+
+        private void EcxecSqlCmd(string cmdstring)
+        {
             SqlConnection connection = new SqlConnection(DB.connect); // создание подключения
             connection.Open();
 
             SqlCommand insertCommand = connection.CreateCommand(); // создание команды на вставку данных
-            insertCommand.CommandText = $"INSERT INTO users ([Name],[IDRole]) VALUES ('{inputName}', '{RoleUser}')";
+            insertCommand.CommandText = cmdstring;
 
             int rowAffected = insertCommand.ExecuteNonQuery(); // выполнение команды на вставку
             connection.Close();
-            
+
             listBox1.Items.Clear();
 
             LoadUsers();
-            DialogeCheck();
-        
         }
 
-        
 
         private void delButton_Click(object sender, EventArgs e)
         {
             var del = listBox1.SelectedItem.ToString().Split(',')[0];
-            SqlConnection connection = new SqlConnection(DB.connect); // создание подключения
-            connection.Open();
+           
+            var cmdstring = $"Delete  users where [Name] = '{del}'";//подготовка запроса
 
-            SqlCommand insertCommand = connection.CreateCommand(); 
-            insertCommand.CommandText = $"Delete  users where [Name] = '{del}'";//подготовка запроса
-
-            int rowAffected = insertCommand.ExecuteNonQuery(); //выполнили запрос
-            connection.Close();
-
-            listBox1.Items.Clear();
-            LoadUsers();
+            EcxecSqlCmd(cmdstring);
 
         }
        
@@ -234,7 +232,7 @@ namespace WindowsFormsTotalPay
 
             выходные данные ID (пользователя)
              */
-        int IDUser;
+            int IDUser;
             DT IDnew = new DT();
 
             if (MFroles == "manager" && listBox1.SelectedItem != null)
@@ -246,7 +244,7 @@ namespace WindowsFormsTotalPay
             else if (MFroles != "manager")
             {
 
-                IDUser = IDnew.ChekRole(tableUsers, UserName);//вызываем метод класса DT через созданный экземпляр IDnew класса DT,
+                IDUser = IDnew.GetIdByName(tableUsers, UserName);//вызываем метод класса DT через созданный экземпляр IDnew класса DT,
                                                               //передаем в него параметры, присваиваем значение в переменную IDUser
             }
             else
@@ -259,18 +257,20 @@ namespace WindowsFormsTotalPay
             var inputDate = Convert.ToDateTime(dateTimePicker1.Text);//конвертируем тип
             var inputHour = Convert.ToInt32(textBox2.Text);//конвертируем тип
 
-
-
             string inputMessang = textBox7.Text;
 
+            if(IDUser == 0)
+            {
+                MessageBox.Show("Пользователь не найден!");
+                return;
+            }
             SqlConnection connection = new SqlConnection(DB.connect); // создание подключения
             connection.Open();
-
-
 
             SqlCommand insertCommand = connection.CreateCommand(); // создание команды на вставку данных
 
             insertCommand.CommandText = $"INSERT INTO Hours ([Date],[Hours],[Messang],[IDName]) VALUES ( @p1, @p2, @p3, @p4 )";//создаем запрос на вставку данных
+            
             //подготовка данных для SQL сервера
             DbParameter pio = insertCommand.CreateParameter();
             pio.ParameterName = "@p1";

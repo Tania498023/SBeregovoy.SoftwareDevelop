@@ -10,46 +10,49 @@ namespace WindowsFormsTotalPay
 {
     public class DT
     {
-        public int ChekRole(DataTable Tbl, string Names)
+        
+        /// <summary>
+        /// Получаем ID роли по имени из таблицы
+        /// </summary>
+        /// <param name="Tbl"></param>
+        /// <param name="Names"></param>
+        /// <returns></returns>
+       
+        public int GetIdByName(DataTable Tbl, string Namestring)
         {
             int IDUser = 0;
-            
-
-            List<string> id = new List<string>();
-
+       
             foreach (DataRow row in Tbl.Rows)
             {
-                string us = "";
-                int us1 = 0;
-                
+                var ID = 0;
                 foreach (DataColumn column in Tbl.Columns)
                 {
-                    var str = row[column].ToString();
+                    //найти имя (Names) в таблице Tbl с полным совпадением имени
+                    //по найденному имени получить ID
+
                    
+                    var str = row[column].ToString();
 
-                    us += str + " ";
+                    if ( int.TryParse(str, out int U))
+                    {
+                        ID = U;
 
-                    us1++;
-                    if (us1 == 2)
-                       id.Add(us);
+                    }
+                    if ( str == Namestring)
+                    {
+                        IDUser = ID;
+                        return IDUser;
+                    }
+
 
                 }
 
             }
-            foreach (var item in id)
-            {
-                if(item.Contains(Names))//переопределить свой Compare чтоб было полное совпадение или переписать другим способом
-                {
-                    IDUser = Int32.Parse(item.Split(' ')[0]);
-                    
-                }
-            }
+            
 
             return IDUser;
 
         }
-
-       
 
     }
 }
