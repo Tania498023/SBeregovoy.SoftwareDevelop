@@ -10,14 +10,14 @@ namespace WindowsFormsTotalPay
 {
     public class DT
     {
-        
+
         /// <summary>
         /// Получаем ID роли по имени из таблицы
         /// </summary>
         /// <param name="Tbl"></param>
-        /// <param name="Names"></param>
+        /// <param name="Namestring"></param>
         /// <returns></returns>
-       
+
         public int GetIdByName(DataTable Tbl, string Namestring)
         {
             int IDUser = 0;
@@ -48,8 +48,7 @@ namespace WindowsFormsTotalPay
                 }
 
             }
-            
-
+      
             return IDUser;
 
         }

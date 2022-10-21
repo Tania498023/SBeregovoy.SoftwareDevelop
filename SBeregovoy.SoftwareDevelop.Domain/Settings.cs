@@ -9,7 +9,7 @@ namespace SBeregovoy.SoftwareDevelop.Domain
     public static class Settings
     {
         /// <summary>
-        /// Количество рабочих часов в месяце
+        /// константы(количество рабочих часов и стоимость часа)
         /// </summary>
         public const byte WorkHoursInMonth = 160;
         public const byte WorkHourInDay = 8;

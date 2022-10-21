@@ -18,6 +18,7 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
         public void FillFileUser(List<User> users, bool userneedwrite)
         {
             string userpath = @".\Data\User.csv";
+
             if (!File.Exists(userpath))
                 return;
             System.IO.FileInfo file = new System.IO.FileInfo(userpath);
@@ -46,7 +47,7 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
 
             if (!File.Exists(newpath))
                 return;
-            System.IO.FileInfo file = new System.IO.FileInfo(newpath);
+          FileInfo file = new FileInfo(newpath);
             long size = file.Length;
 
 
@@ -92,6 +93,8 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
         /// <returns></returns>
         public List<User> ReadFileUser()
         {
+            //создаем экземпляр/объект User для использования по умолчанию, чтобы была возможность зайти в приложение даже, если файл пустой
+            //добавляем этот объект в коллекцию tmplist
             var defaultuser = new User("defaultuser", UserRole.Manager);
             var tmplist = new List<User>();
             tmplist.Add(defaultuser);
@@ -109,11 +112,24 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
                if (string.IsNullOrEmpty(stroka) || string.IsNullOrWhiteSpace(stroka))
                     continue;
                 var plitedstroka = stroka.Split(',');
+                User user = null;
 
-                strokainenum = (UserRole)Enum.Parse(typeof(UserRole), plitedstroka[1]);
+                try
+                {
+                    strokainenum = (UserRole)Enum.Parse(typeof(UserRole), plitedstroka[1]);
+                    user = new User(plitedstroka[0], strokainenum);//создали  объект
+                }
+               
+                catch
+                {
+                    Console.WriteLine("Не соответствует формат введенной строки!");
+                }
 
-                var user = new User(plitedstroka[0], strokainenum);//создали  объект
-                users.Add(user);// добавили объект в коллекцию
+                if (user != null)
+                {
+                    users.Add(user);// добавили объект в коллекцию
+                }
+
             }
             if(users.Count == 0)
             {
@@ -140,12 +156,15 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
             {
                 if (string.IsNullOrEmpty(stroka))
                     continue;
+
+                //конвертируем тип string(stroka) в тип TimeRecord (user) для возможности последующего добавления в коллекцию generic типа TimeRecord
                 var plitedstroka = stroka.Split(',');
-                               
                 var user = new TimeRecord(plitedstroka);//создали  объект
+
                 generic.Add(user);// добавили объект в коллекцию
             }
             return generic;
+           
         }
         /// <summary>
         /// Получаем имя пользователя и возвращаем коллекцию User
@@ -160,6 +179,7 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
                     return record;
             }
             return null;
+            
         }
         /// <summary>
         /// Получаем отчет по сотрудникам с учетом роли 
@@ -168,6 +188,9 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
         /// <param name="startdate"></param>
         /// <param name="enddate"></param>
         /// <returns></returns>
+
+
+        //раскоментировать!
         public List<TimeRecord> ReportGet(UserRole userRole, DateTime? startdate = null, DateTime? enddate = null)
         {
             var records = ReadFileGeneric((int)userRole);
@@ -181,10 +204,10 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
                 enddate = DateTime.Now.Date;
             }
 
-            //берем каждую запись из коллекции records и сравниваем ее с переменной, которая передана в метод.
-            //если условие выполняется, то кладем элемент в ToList(). Where- аналог foreach с if/else. x- виртуальная переменная
-            // коллекции records- аналог item.Условие в данном случае: если x.Date меньше или равно конечной даты enddate(максимальная)
-            // и x.Date больше или равно начальной даты startdate(минимальная)
+            //    //берем каждую запись из коллекции records и сравниваем ее с переменной, которая передана в метод.
+            //    //если условие выполняется, то кладем элемент в ToList(). Where- аналог foreach с if/else. x- виртуальная переменная
+            //    // коллекции records- аналог item.Условие в данном случае: если x.Date меньше или равно конечной даты enddate(максимальная)
+            //    // и x.Date больше или равно начальной даты startdate(минимальная)
             return records.Where(x => startdate.Value <= x.Date && enddate >= x.Date).ToList();
         }
         /// <summary>
@@ -198,6 +221,7 @@ namespace SBeregovoy.SoftwareDevelop.Persistence
         public List<TimeRecord> ReportGetByUser(string userName, UserRole userRole, DateTime? from = null, DateTime? to = null)
         {
             return ReportGet(userRole, from, to).Where(x => x.Name == userName).ToList();
+
         }
 
 

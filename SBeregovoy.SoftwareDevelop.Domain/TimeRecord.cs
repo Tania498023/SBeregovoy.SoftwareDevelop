@@ -22,12 +22,12 @@ namespace SBeregovoy.SoftwareDevelop.Domain
             Hours = hours;
             Message = message;
         }
-        public TimeRecord(string[] SSS)
+        public TimeRecord(string[] Stroka)
         {
-            Date = DateTime.Parse(SSS[0]);//строку конвертируем в DateTime
-            Name = SSS[1];
-            Hours = int.Parse(SSS[2]);//строку конвертируем в int
-            Message = SSS[3];
+            Date = DateTime.Parse(Stroka[0]);//строку конвертируем в DateTime
+            Name = Stroka[1];
+            Hours = int.Parse(Stroka[2]);//строку конвертируем в int
+            Message = Stroka[3];
         }
     }
 }

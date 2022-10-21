@@ -14,6 +14,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
     {
         static FileRepository fill;
         private static User polzovatel;
+        
 
         static void Main(string[] args)
 
@@ -21,12 +22,13 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             int userRole = 0;
 
             fill = new FileRepository();//создаем экземпляры для возможности вызова метода FillFileUser
+
             var userreturn = new MemoryRepository();//создаем экземпляры для возможности вызова метода Users
-            fill.FillFileUser(userreturn.Users(), false);//вызываем методы FillFileUser и Users
+            fill.FillFileUser(userreturn.Users(), false);
 
 
-            var genericreturn = new MemoryRepository();//создаем экземпляры для возможности вызова метода Employees
-            fill.FillFileGeneric(genericreturn.Generic(), userRole, false);//вызываем методы FillFileEmployee и Employees
+            var genericreturn = new MemoryRepository();
+            fill.FillFileGeneric(genericreturn.Generic(), userRole, false);
 
             var text = fill.ReadFileUser();
 
@@ -53,7 +55,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             do
             {
                 Console.WriteLine("Введите роль \n Введите 0, если менеджер \n Введите 1, если сотрудник \n Введите 2, если фрилансер");
-                int controleRole = 0;
+                int controleRole;
 
                 if (Int32.TryParse(Console.ReadLine(), out controleRole))
                 {
@@ -149,6 +151,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                         WatchWorkerHour();
                         break;
                     }
+                    
                     else if (actionmanager == 0)
                     {
 
@@ -162,6 +165,8 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
 
             while ((actionmanager < 1 || actionmanager > 4) && actionmanager != 0);
         }
+
+       
         private static void Showemployeemenu()
         {
             int actionemployee;
@@ -244,7 +249,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             Console.ReadLine();
         }
 
-        private static void AddFrilanserHour()
+        private static void AddFrilanserHour()//можно оптимизировать с аналогичным методом  AddEmployeeHour()!!!!!
         {
             AddHour();
             MenuUp();
@@ -253,29 +258,43 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
         private static void AddHour()
         {
             int H;
+            DateTime date;
+            
             do
             {
                 Console.WriteLine("Введите отработанное время");
                 if (Int32.TryParse(Console.ReadLine(), out H))
+                
                 {
                     if (H <= 0 || H >= 24)
                     {
                         Console.WriteLine("Вы вводите некорректные данные");
 
                     }
-                    else
+                    Console.WriteLine("Введите дату");
+                    if (DateTime.TryParse(Console.ReadLine(), out date))
                     {
-                        Console.WriteLine("Введите сообщение");
-                        string mas = Console.ReadLine();
-                        var time = new TimeRecord(DateTime.Now, polzovatel.Name, H, mas);
-                        List<TimeRecord> times = new List<TimeRecord>();
-                        times.Add(time);
-                        fill.FillFileGeneric(times, (int)polzovatel.UserRole, true);
+                        if(date == null)
+                        {
+                            Console.WriteLine("Поле дата не может быть пустым!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Введите сообщение");
+                            string mas = Console.ReadLine();
+
+
+                            var time = new TimeRecord(date, polzovatel.Name, H, mas);
+                            List<TimeRecord> times = new List<TimeRecord>();
+                            times.Add(time);
+                            fill.FillFileGeneric(times, (int)polzovatel.UserRole, true);
+                        }
                     }
+                    
 
                 }
             }
-            while (H <= 0 || H >= 24);
+            while ((H <= 0 || H >= 24));
         }
 
         private static void WatchEmployeeHour()
@@ -351,7 +370,6 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                         workmap[workitem.Name].Add(workitem);//просто добавляем Значение по существующему ключу
                    
                     }
-     
             }
 
             foreach (var sortwork in workmap)
