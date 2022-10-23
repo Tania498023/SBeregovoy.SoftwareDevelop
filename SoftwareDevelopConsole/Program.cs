@@ -255,7 +255,9 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             MenuUp();
         }
 
-        private static void AddHour()
+        private static void AddHour()//метод использ для имплои и фрилансера...посмотреть может реализовать контроль вводимой даты отработанного времени для каждой роли
+            
+           
         {
             int H;
             DateTime date;
@@ -273,26 +275,30 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                     }
                     Console.WriteLine("Введите дату");
                     if (DateTime.TryParse(Console.ReadLine(), out date))
+                        if (date != DateTime.MinValue && date <= DateTime.Now)
+                        {
+                        Console.WriteLine("Введите сообщение");
+                        string mas = Console.ReadLine();
+
+                        var time = new TimeRecord(date, polzovatel.Name, H, mas);
+                        List<TimeRecord> times = new List<TimeRecord>();
+                        times.Add(time);
+                        fill.FillFileGeneric(times, (int)polzovatel.UserRole, true);
+                 
+                        }
+
+                        else 
+                        {
+                            Console.WriteLine("Дата не может быть будущим периодом!");
+                        }
+
+                    else
                     {
-                        if(date == null)
-                        {
-                            Console.WriteLine("Поле дата не может быть пустым!");
-                        }
-                        else
-                        {
-                            Console.WriteLine("Введите сообщение");
-                            string mas = Console.ReadLine();
-
-
-                            var time = new TimeRecord(date, polzovatel.Name, H, mas);
-                            List<TimeRecord> times = new List<TimeRecord>();
-                            times.Add(time);
-                            fill.FillFileGeneric(times, (int)polzovatel.UserRole, true);
-                        }
+                        Console.WriteLine("Поле дата не может быть пустым!");
                     }
-                    
 
                 }
+
             }
             while ((H <= 0 || H >= 24));
         }
@@ -524,14 +530,14 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
 
         private static void MenuUp()
         {
-            string choice;
+            int choice;
             Console.WriteLine("Выберите действие  \n " +
-                          "Введите y, если вы хотите продолжить \n " +
-                          "Введите n, если вы хотите выйти из меню");
+                          "Введите 1, если вы хотите продолжить \n " +
+                          "Введите 2, если вы хотите выйти из меню");
 
-            choice = Console.ReadLine();
-
-            if (choice == "y")
+           
+            if (Int32.TryParse(Console.ReadLine(), out choice))
+                if (choice == 1)
             {
                 if (polzovatel.UserRole == UserRole.Manager)
                 {
@@ -547,7 +553,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                 }
 
             }
-            else if (choice == "n")
+            else if (choice == 2)
             {
                 Environment.Exit(0);
 
