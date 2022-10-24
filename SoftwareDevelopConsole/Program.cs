@@ -14,7 +14,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
     {
         static FileRepository fill;
         private static User polzovatel;
-        
+
 
         static void Main(string[] args)
 
@@ -80,7 +80,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
 
                 }
             } while (enteruser < UserRole.Manager || enteruser > UserRole.Frelanser);
-           
+
             return enteruser;
         }
 
@@ -151,7 +151,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                         WatchWorkerHour();
                         break;
                     }
-                    
+
                     else if (actionmanager == 0)
                     {
 
@@ -166,7 +166,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             while ((actionmanager < 1 || actionmanager > 4) && actionmanager != 0);
         }
 
-       
+
         private static void Showemployeemenu()
         {
             int actionemployee;
@@ -186,7 +186,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                     }
                     else if (actionemployee == 2)
                     {
-                        WatchEmployeeHour();
+                        WatchStaffHour();
                         break;
                     }
                     else
@@ -215,7 +215,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                     }
                     else if (actionfrilanser == 2)
                     {
-                        WatchFrilanserHour();
+                        WatchStaffHour();
                         break;
                     }
                     else
@@ -230,7 +230,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
         {
             Environment.Exit(0);
         }
-        private static void WatchFrilanserHour()
+        private static void WatchStaffHour()
         {
             WatchHour();
             MenuUp();
@@ -256,17 +256,17 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
         }
 
         private static void AddHour()//метод использ для имплои и фрилансера...посмотреть может реализовать контроль вводимой даты отработанного времени для каждой роли
-            
-           
+
+
         {
             int H;
             DateTime date;
-            
+
             do
             {
                 Console.WriteLine("Введите отработанное время");
                 if (Int32.TryParse(Console.ReadLine(), out H))
-                
+
                 {
                     if (H <= 0 || H >= 24)
                     {
@@ -275,22 +275,19 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                     }
                     Console.WriteLine("Введите дату");
                     if (DateTime.TryParse(Console.ReadLine(), out date))
-                        if (date != DateTime.MinValue && date <= DateTime.Now)
+                        if (date != DateTime.MinValue && date <= DateTime.Now && polzovatel.UserRole == UserRole.Employee)
                         {
-                        Console.WriteLine("Введите сообщение");
-                        string mas = Console.ReadLine();
-
-                        var time = new TimeRecord(date, polzovatel.Name, H, mas);
-                        List<TimeRecord> times = new List<TimeRecord>();
-                        times.Add(time);
-                        fill.FillFileGeneric(times, (int)polzovatel.UserRole, true);
-                 
+                            AddHourWithControleDate(H, date);
+                        }
+                        else if (date != DateTime.MinValue && date <= DateTime.Now && date >= DateTime.Now.Date.AddDays(-2) && polzovatel.UserRole == UserRole.Frelanser)
+                        {
+                            AddHourWithControleDate(H, date);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Дата введена некорректно!");
                         }
 
-                        else 
-                        {
-                            Console.WriteLine("Дата не может быть будущим периодом!");
-                        }
 
                     else
                     {
@@ -303,12 +300,18 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             while ((H <= 0 || H >= 24));
         }
 
-        private static void WatchEmployeeHour()
+        private static void AddHourWithControleDate(int H, DateTime date)
         {
-            WatchHour();
-            MenuUp();
+            Console.WriteLine("Введите сообщение");
+            string mas = Console.ReadLine();
+
+            var time = new TimeRecord(date, polzovatel.Name, H, mas);
+            List<TimeRecord> times = new List<TimeRecord>();
+            times.Add(time);
+            fill.FillFileGeneric(times, (int)polzovatel.UserRole, true);
         }
 
+ 
         private static void AddEmployeeHour()
         {
             AddHour();
@@ -333,11 +336,11 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                     continue;
                 }
                 Console.WriteLine("Введите дату окончания отчета");
-                 if(DateTime.TryParse(Console.ReadLine(), out enddate))
+                if (DateTime.TryParse(Console.ReadLine(), out enddate))
                 {
 
                 }
-                 else
+                else
                 {
                     continue;
                 }
@@ -351,37 +354,37 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             }
             while (true);
 
-            List<TimeRecord> allworkrep= new List<TimeRecord>();//создали новую общую коллекцию (пустая)
-            for(int indexrole = 0; indexrole < 3; indexrole++)
+            List<TimeRecord> allworkrep = new List<TimeRecord>();//создали новую общую коллекцию (пустая)
+            for (int indexrole = 0; indexrole < 3; indexrole++)
             {
                 List<TimeRecord> allwork = fill.ReadFileGeneric(indexrole);//вычитываем все файлы в коллекцию allwork
                 allworkrep.AddRange(allwork);//добавляем группу элементов коллекции allwork в общую коллекцию allworkrep
             }
 
-            
+
             Dictionary<string, List<TimeRecord>> workmap = new Dictionary<string, List<TimeRecord>>();//создаем новый словарь (пока пустой), в котором тип
                                                                                                       //Ключа строка(фильтруем по имени, так как
-                                                                                                      //в нашем приложении оно уникально), тип Значения
-                                                                                                      // Список(List<>)
-            foreach(var workitem in allworkrep)//перебираем общую коллекцию и каждый ее элемент кладем в переменную workitem
+                                                                                                     // в нашем приложении оно уникально), тип Значения Список(List<>)
+
+            foreach (var workitem in allworkrep)//перебираем общую коллекцию и каждый ее элемент кладем в переменную workitem
             {
                 if (workitem.Date >= startdate && workitem.Date <= enddate)//фильтруем дату отчета
-                    if ( !workmap.ContainsKey(workitem.Name))//проверяем наличие Ключа, если его нет
+                    if (!workmap.ContainsKey(workitem.Name))//проверяем наличие Ключа, если его нет
                     {
                         workmap.Add(workitem.Name, new List<TimeRecord>());// то добавляем ключ, а значение пока еще пустое!!!
-                       workmap[workitem.Name].Add(workitem);//после добавления ключа, добавляем Значение по вышедобавленному ключу
-                    }   
+                        workmap[workitem.Name].Add(workitem);//после добавления ключа, добавляем Значение по вышедобавленному ключу
+                    }
                     else//иначе ключ есть
                     {
                         workmap[workitem.Name].Add(workitem);//просто добавляем Значение по существующему ключу
-                   
+
                     }
             }
 
             foreach (var sortwork in workmap)
             {
                 var rephour = fill.UserGet(sortwork.Key);//получаем имя-ключ из словаря и значение кладем в переменную rephour
-      
+
                 var HH = sortwork.Value;//значение из словаря положили в переменную HH
                 if (rephour.UserRole == UserRole.Manager)//проверяем роль через имя
                 {
@@ -405,7 +408,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                     Console.WriteLine("--------------------------------------");
                     Console.WriteLine($"Сотрудник {sortwork.Key}");
                     totp.PrintRepEmployee();
-                    
+
                     Console.WriteLine($"Всего отработано {totp.sumhour}");
                     Console.WriteLine($"Всего заработано {totp.TotalPay}");
                     itoghour += totp.sumhour;
@@ -419,7 +422,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                     Console.WriteLine("--------------------------------------");
                     Console.WriteLine($"Сотрудник {sortwork.Key}");
                     totp.PrintRepFrilanser();
-                    
+
                     Console.WriteLine($"Всего отработано {totp.sumhour}");
                     Console.WriteLine($"Всего заработано {totp.TotalPay}");
                     itoghour += totp.sumhour;
@@ -432,11 +435,11 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             Console.WriteLine("--------------------------------------");
             Console.WriteLine($"Всего отработано {itoghour}");
             Console.WriteLine($"Всего заработано {itogtotalpay}");
-            
+
             MenuUp();
         }
 
-            private static void WatchWorkerHour()//часы по конкретному сотруднику
+        private static void WatchWorkerHour()//часы по конкретному сотруднику
         {
             DateTime startdate;
             DateTime enddate;
@@ -444,9 +447,9 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             do
             {
                 Console.WriteLine("Введите дату начала отчета");
-                if(DateTime.TryParse(Console.ReadLine(), out startdate))
+                if (DateTime.TryParse(Console.ReadLine(), out startdate))
                 {
-                    
+
                 }
                 else
                 {
@@ -463,7 +466,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                     Console.WriteLine("Вы вводите некорректные данные");
                     continue;
                 }
-                 
+
                 if (enddate < startdate)
                 {
                     Console.WriteLine("Вы  вводите некорректную дату");
@@ -479,7 +482,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             {
                 Console.WriteLine("---------------------");
                 Console.WriteLine("Введите пользователя");
-                
+
 
                 string inputstring = Console.ReadLine();
                 Console.WriteLine("---------------------");
@@ -535,49 +538,49 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                           "Введите 1, если вы хотите продолжить \n " +
                           "Введите 2, если вы хотите выйти из меню");
 
-           
+
             if (Int32.TryParse(Console.ReadLine(), out choice))
                 if (choice == 1)
-            {
-                if (polzovatel.UserRole == UserRole.Manager)
                 {
-                    Showmanagermenu();
-                }
-                if (polzovatel.UserRole == UserRole.Frelanser)
-                {
-                    Showfrilansermenu();
-                }
-                if (polzovatel.UserRole == UserRole.Employee)
-                {
-                    Showemployeemenu();
-                }
+                    if (polzovatel.UserRole == UserRole.Manager)
+                    {
+                        Showmanagermenu();
+                    }
+                    if (polzovatel.UserRole == UserRole.Frelanser)
+                    {
+                        Showfrilansermenu();
+                    }
+                    if (polzovatel.UserRole == UserRole.Employee)
+                    {
+                        Showemployeemenu();
+                    }
 
-            }
-            else if (choice == 2)
-            {
-                Environment.Exit(0);
-
-            }
-            else
-                    Console.WriteLine("Вы выбрали несуществующее действие");
+                }
+                else if (choice == 2)
+                {
                     Environment.Exit(0);
-            
+
+                }
+                else
+                    Console.WriteLine("Вы выбрали несуществующее действие");
+            Environment.Exit(0);
+
         }
 
         private static void AddWorkerHour()
+        {
+            Console.WriteLine("*************************************************");
+            Console.WriteLine("Введите пользователя");
+            string name = Console.ReadLine();
+            polzovatel = fill.UserGet(name);
+
+            if (polzovatel == null)
             {
-                Console.WriteLine("*************************************************");
-                Console.WriteLine("Введите пользователя");
-                string name = Console.ReadLine();
-                polzovatel = fill.UserGet(name);
+                Console.WriteLine("Пользователь не существует");//некорректная проверка
+                return;
+            }
 
-                if (polzovatel == null)
-                {
-                    Console.WriteLine("Пользователь не существует");//некорректная проверка
-                    return;
-                }
-
-                Console.WriteLine("Введите отработанное время");
+            Console.WriteLine("Введите отработанное время");
             if (Int32.TryParse(Console.ReadLine(), out int H))
             {
                 Console.WriteLine("Введите сообщение");
@@ -603,7 +606,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
 
 
             Dictionary<UserRole, List<string>> groupworkrep = new Dictionary<UserRole, List<string>>();
-            
+
             var groupuser = fill.ReadFileUser();
             foreach (var groupitem in groupuser)
             {
@@ -628,7 +631,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                 foreach (var item in groupwork.Value)
                 {
                     Console.WriteLine(item);
-                   
+
                 }
             }
             Console.WriteLine("-------------------------");
