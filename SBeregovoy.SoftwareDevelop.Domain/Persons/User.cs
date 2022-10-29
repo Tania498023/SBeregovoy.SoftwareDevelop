@@ -8,7 +8,7 @@ namespace SBeregovoy.SoftwareDevelop.Domain
 {
     public class User
     {
-        public string Name { get; }
+        public string Name { get; set; }
         public UserRole UserRole { get; }
 
         public User(string name, UserRole userRole)

@@ -181,7 +181,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
 
                     if (actionemployee == 1)
                     {
-                        AddEmployeeHour();
+                        AddStaffHour();
                         break;
                     }
                     else if (actionemployee == 2)
@@ -210,7 +210,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
 
                     if (actionfrilanser == 1)
                     {
-                        AddFrilanserHour();
+                        AddStaffHour();
                         break;
                     }
                     else if (actionfrilanser == 2)
@@ -249,13 +249,13 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             Console.ReadLine();
         }
 
-        private static void AddFrilanserHour()//можно оптимизировать с аналогичным методом  AddEmployeeHour()!!!!!
+        private static void AddStaffHour()
         {
             AddHour();
             MenuUp();
         }
 
-        private static void AddHour()//метод использ для имплои и фрилансера...посмотреть может реализовать контроль вводимой даты отработанного времени для каждой роли
+        private static void AddHour()
 
 
         {
@@ -312,13 +312,8 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
         }
 
  
-        private static void AddEmployeeHour()
-        {
-            AddHour();
-            MenuUp();
-        }
 
-        private static void WatchWorkerReport()//по все сотрудникам за выбранный период (группируем по сотруднику)
+        private static void WatchWorkerReport()//по всем сотрудникам за выбранный период (группируем по сотруднику)
         {
             DateTime startdate;
             DateTime enddate;
@@ -388,11 +383,11 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                 var HH = sortwork.Value;//значение из словаря положили в переменную HH
                 if (rephour.UserRole == UserRole.Manager)//проверяем роль через имя
                 {
-                    var totp = new Manager(rephour.Name, HH, startdate, enddate);//создаем новый экземпляр типа Manager
+                    var totp = new Manager(rephour, HH, startdate, enddate);//создаем новый экземпляр типа Manager
                     Console.WriteLine("");
                     Console.WriteLine("--------------------------------------");
                     Console.WriteLine($"Сотрудник {sortwork.Key}");
-                    totp.PrintRepManager();//у экземпляра вызываем метод PrintRepManager
+                    totp.PrintRepPerson();
 
                     Console.WriteLine($"Всего отработано {totp.sumhour}");//итоговое время по конкретному сотруднику
                     Console.WriteLine($"Всего заработано {totp.TotalPay}");//итоговая зп по конкретному сотруднику
@@ -403,11 +398,11 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                 }
                 else if (rephour.UserRole == UserRole.Employee)
                 {
-                    var totp = new Employee(rephour.Name, HH, startdate, enddate);
+                    var totp = new Employee(rephour, HH, startdate, enddate);
                     Console.WriteLine("");
                     Console.WriteLine("--------------------------------------");
                     Console.WriteLine($"Сотрудник {sortwork.Key}");
-                    totp.PrintRepEmployee();
+                    totp.PrintRepPerson();
 
                     Console.WriteLine($"Всего отработано {totp.sumhour}");
                     Console.WriteLine($"Всего заработано {totp.TotalPay}");
@@ -417,11 +412,11 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                 }
                 else if (rephour.UserRole == UserRole.Frelanser)
                 {
-                    var totp = new Frilanser(rephour.Name, HH, startdate, enddate);
+                    var totp = new Freelanser(rephour, HH, startdate, enddate);
                     Console.WriteLine("");
                     Console.WriteLine("--------------------------------------");
                     Console.WriteLine($"Сотрудник {sortwork.Key}");
-                    totp.PrintRepFrilanser();
+                    totp.PrintRepPerson();
 
                     Console.WriteLine($"Всего отработано {totp.sumhour}");
                     Console.WriteLine($"Всего заработано {totp.TotalPay}");
@@ -443,7 +438,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
         {
             DateTime startdate;
             DateTime enddate;
-            string choice;
+           
             do
             {
                 Console.WriteLine("Введите дату начала отчета");
@@ -502,8 +497,8 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             var HH = fill.ReadFileGeneric((int)rephour.UserRole);
             if (rephour.UserRole == UserRole.Manager)
             {
-                var totp = new Manager(rephour.Name, HH, startdate, enddate);
-                totp.PrintRepManager();
+                var totp = new Manager(rephour, HH, startdate, enddate);
+                totp.PrintRepPerson();
                 Console.WriteLine($"Всего отработано {totp.sumhour}");
                 Console.WriteLine($"Всего заработано {totp.TotalPay}");
 
@@ -511,8 +506,8 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             }
             else if (rephour.UserRole == UserRole.Employee)
             {
-                var totp = new Employee(rephour.Name, HH, startdate, enddate);
-                totp.PrintRepEmployee();
+                var totp = new Employee(rephour, HH, startdate, enddate);
+                totp.PrintRepPerson();
                 Console.WriteLine($"Всего отработано {totp.sumhour}");
                 Console.WriteLine($"Всего заработано {totp.TotalPay}");
 
@@ -520,8 +515,8 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             }
             else if (rephour.UserRole == UserRole.Frelanser)
             {
-                var totp = new Frilanser(rephour.Name, HH, startdate, enddate);
-                totp.PrintRepFrilanser();
+                var totp = new Freelanser(rephour, HH, startdate, enddate);
+                totp.PrintRepPerson();
                 Console.WriteLine($"Всего отработано {totp.sumhour}");
                 Console.WriteLine($"Всего заработано {totp.TotalPay}");
 

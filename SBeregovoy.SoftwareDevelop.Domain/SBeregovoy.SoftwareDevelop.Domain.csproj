@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Persons\Employee.cs" />
-    <Compile Include="Persons\Frilanser.cs" />
+    <Compile Include="Persons\Freelanser.cs" />
     <Compile Include="Persons\Manager.cs" />
     <Compile Include="Persons\Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
