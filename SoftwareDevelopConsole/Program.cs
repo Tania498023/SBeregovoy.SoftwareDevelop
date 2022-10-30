@@ -54,7 +54,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             UserRole enteruser = default;
             do
             {
-                Console.WriteLine("Введите роль \n Введите 0, если менеджер \n Введите 1, если сотрудник \n Введите 2, если фрилансер");
+                Console.WriteLine("\n Введите 0, если менеджер \n Введите 1, если сотрудник \n Введите 2, если фрилансер");
                 int controleRole;
 
                 if (Int32.TryParse(Console.ReadLine(), out controleRole))
@@ -313,7 +313,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
 
  
 
-        private static void WatchWorkerReport()//по всем сотрудникам за выбранный период (группируем по сотруднику)
+        private static void WatchWorkerReport()//отчет по всем сотрудникам за выбранный период (группируем по сотруднику)
         {
             DateTime startdate;
             DateTime enddate;
@@ -434,7 +434,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             MenuUp();
         }
 
-        private static void WatchWorkerHour()//часы по конкретному сотруднику
+        private static void WatchWorkerHour()//отчет по конкретному сотруднику
         {
             DateTime startdate;
             DateTime enddate;

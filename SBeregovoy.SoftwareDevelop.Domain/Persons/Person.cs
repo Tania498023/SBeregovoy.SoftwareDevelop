@@ -17,12 +17,7 @@ namespace SBeregovoy.SoftwareDevelop.Domain
         public decimal TotalPay { get; set; }
         public List<TimeRecord> TimeRecords { get; set; }
 
-        //public Person( List<TimeRecord> timeRecords)
-        //{
-            
-        //    TimeRecords = timeRecords;
-        //}
-
+        
         public Person( User user, List<TimeRecord> timeRecords, DateTime startdate, DateTime enddate)
         {
            
@@ -32,9 +27,8 @@ namespace SBeregovoy.SoftwareDevelop.Domain
             enddates = enddate;
             
 
-
         }
-            public void PrintRepPerson()
+        virtual public void  PrintRepPerson()
         {
             Console.WriteLine($"Отчет по сотруднику {User.Name}  {User.UserRole} за период c {startdates.Date.ToString("d")} по {enddates.Date.ToString("d")}");
 
@@ -53,19 +47,6 @@ namespace SBeregovoy.SoftwareDevelop.Domain
 
         }
 
-        //public  void  PrintRepFrilanser()
-        //{
-
-        //    foreach (TimeRecord item in base.TimeRecords )
-        //    {
-        //        if (item.Date >= startdates && item.Date <= enddates)
-        //            if (base.Name == item.Name)
-        //            {
-        //                Console.WriteLine($"Отчет по сотруднику {base.Name} за период c {startdates.Date.ToString("d")} по {enddates.Date.ToString("d")}");
-        //                Console.WriteLine(item.Date + "\t" + item.Hours + "\t" + item.Message);
-        //                sumhour += item.Hours;
-        //            }
-        //    }
 
     }
 
