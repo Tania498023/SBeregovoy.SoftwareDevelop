@@ -9,7 +9,7 @@ namespace SBeregovoy.SoftwareDevelop.Domain
     public class TimeRecord
     
     {
-        public DateTime Date {get;}
+        public DateTime Date { get; set; }
         public string Name { get; }
         public int Hours { get; }
         public string Message { get; }

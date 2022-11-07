@@ -114,6 +114,7 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
         }
 
         private static void Showmanagermenu()
+        
         {
             int actionmanager;
             do
@@ -235,16 +236,72 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             WatchHour();
             MenuUp();
         }
-
+       
         private static void WatchHour()
         {
-            var HH = fill.ReadFileGeneric((int)polzovatel.UserRole);//!!!метод вернул коллекцию, сохранили в переменную
-            foreach (var item in HH)//перебираем коллекцию HH, выбираем нужное и сохраняем в переменную item
+            List<TimeRecord> HH = fill.ReadFileGeneric((int)polzovatel.UserRole);//!!!метод вернул коллекцию, сохранили в переменную
+
+            DateTime startdate;
+            DateTime enddate;
+           
+            do
             {
+                Console.WriteLine("Введите дату начала отчета");
 
-                if (item.Name == polzovatel.Name)//если элемент из коллекции совпадает по имени с пользователем, выводим на консоль
-                    Console.WriteLine(item.Date.ToString() + "\t" + item.Name + "\t" + item.Hours + "\t" + item.Message);
+                var D = Console.ReadLine();
+                if(String.IsNullOrEmpty(D))
+                {
+                    Console.WriteLine("Дата должна быть введена!");
+                }
+                if (DateTime.TryParse(D, out startdate))
+                {
 
+                }
+                else
+                {
+                    Console.WriteLine("Введенная дата неверная!");
+                    continue;
+                }
+                
+                Console.WriteLine("Введите дату окончания отчета");
+                var DD = Console.ReadLine();
+                if (String.IsNullOrEmpty(DD))
+                {
+                    Console.WriteLine("Дата должна быть введена!");
+                }
+                if (DateTime.TryParse(DD, out enddate))
+                {
+
+                }
+                else
+                {
+                    Console.WriteLine("Введенная дата неверная!");
+                    continue;
+                }
+                if (enddate < startdate)
+                {
+                    Console.WriteLine("Вы  вводите некорректную дату");
+
+                }
+                else
+                    break;
+            }
+            while (true);
+
+
+            foreach (var item in HH)
+            {
+                if (item.Date >= startdate && item.Date <= enddate)
+
+                {
+                    if (item.Name == polzovatel.Name)
+                    {
+                        Console.WriteLine(item.Date.ToString() + "\t" + item.Name + "\t" + item.Hours + "\t" + item.Message);
+                    }
+                    
+                }
+                
+             
             }
             Console.ReadLine();
         }
@@ -311,9 +368,11 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             fill.FillFileGeneric(times, (int)polzovatel.UserRole, true);
         }
 
- 
 
-        private static void WatchWorkerReport()//отчет по всем сотрудникам за выбранный период (группируем по сотруднику)
+        /// <summary>
+        /// метод выводит отчет по всем сотрудникам за выбранный период (группируем по сотруднику)
+        /// </summary>
+        private static void WatchWorkerReport()
         {
             DateTime startdate;
             DateTime enddate;
@@ -322,21 +381,33 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             do
             {
                 Console.WriteLine("Введите дату начала отчета");
-                if (DateTime.TryParse(Console.ReadLine(), out startdate))
+                var D = Console.ReadLine();
+                if (String.IsNullOrEmpty(D))
+                {
+                    Console.WriteLine("Дата должна быть введена!");
+                }
+                if (DateTime.TryParse(D, out startdate))
                 {
 
                 }
                 else
                 {
+                    Console.WriteLine("Вы вводите некорректные данные");
                     continue;
                 }
                 Console.WriteLine("Введите дату окончания отчета");
-                if (DateTime.TryParse(Console.ReadLine(), out enddate))
+                var DD = Console.ReadLine();
+                if (String.IsNullOrEmpty(DD))
+                {
+                    Console.WriteLine("Дата должна быть введена!");
+                }
+                if (DateTime.TryParse(DD, out enddate))
                 {
 
                 }
                 else
                 {
+                    Console.WriteLine("Вы вводите некорректные данные");
                     continue;
                 }
                 if (enddate < startdate)
@@ -434,7 +505,10 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             MenuUp();
         }
 
-        private static void WatchWorkerHour()//отчет по конкретному сотруднику
+        /// <summary>
+        /// метод выводит отчет по конкретному сотруднику
+        /// </summary>
+        private static void WatchWorkerHour()
         {
             DateTime startdate;
             DateTime enddate;
@@ -442,7 +516,12 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             do
             {
                 Console.WriteLine("Введите дату начала отчета");
-                if (DateTime.TryParse(Console.ReadLine(), out startdate))
+                var D = Console.ReadLine();
+                if (String.IsNullOrEmpty(D))
+                {
+                    Console.WriteLine("Дата должна быть введена!");
+                }
+                if (DateTime.TryParse(D, out startdate))
                 {
 
                 }
@@ -452,7 +531,12 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                     continue;
                 }
                 Console.WriteLine("Введите дату окончания отчета");
-                if (DateTime.TryParse(Console.ReadLine(), out enddate))
+                var DD = Console.ReadLine();
+                if (String.IsNullOrEmpty(DD))
+                {
+                    Console.WriteLine("Дата должна быть введена!");
+                }
+                if (DateTime.TryParse(DD, out enddate))
                 {
 
                 }
@@ -561,45 +645,74 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             Environment.Exit(0);
 
         }
-
-        private static void AddWorkerHour()
+       
+private static void AddWorkerHour()
         {
+            User worker;
+            DateTime date;
             Console.WriteLine("*************************************************");
             Console.WriteLine("Введите пользователя");
             string name = Console.ReadLine();
-            polzovatel = fill.UserGet(name);
-
-            if (polzovatel == null)
+            worker = fill.UserGet(name);
+            do
             {
-                Console.WriteLine("Пользователь не существует");//некорректная проверка
-                return;
-            }
+                if (worker == null)
+                {
+                    Console.WriteLine("Пользователь не существует");
+                    return;
+                }
 
-            Console.WriteLine("Введите отработанное время");
-            if (Int32.TryParse(Console.ReadLine(), out int H))
-            {
-                Console.WriteLine("Введите сообщение");
-                string mas = Console.ReadLine();
-                var time = new TimeRecord(DateTime.Now, polzovatel.Name, H, mas);
-                List<TimeRecord> times = new List<TimeRecord>();
-                times.Add(time);
-                fill.FillFileGeneric(times, (int)polzovatel.UserRole, true);
+                Console.WriteLine("Введите дату");
+                var DD = Console.ReadLine();
+                
+                if (!String.IsNullOrEmpty(DD) && DateTime.TryParse(DD, out date))
+                {
+
+
+                }
+                else
+                {
+                    Console.WriteLine("Введенная дата неверная!");
+                    continue;
+
+                }
+                Console.WriteLine("Введите отработанное время");
+                if (Int32.TryParse(Console.ReadLine(), out int H))
+                {
+                    Console.WriteLine("Введите сообщение");
+                    string mas = Console.ReadLine();
+                    var time = new TimeRecord(date, worker.Name, H, mas);
+                    List<TimeRecord> times = new List<TimeRecord>();
+                    times.Add(time);
+                    fill.FillFileGeneric(times, (int)worker.UserRole, true);
+                }
+                MenuUp();
             }
-            MenuUp();
+            while (true);
+           
         }
 
         private static void AddWorker()
         {
             Console.WriteLine("Введите имя пользователя");
-            string N = Console.ReadLine();
+            string userName = Console.ReadLine();
+            User M = fill.UserGet(userName);
+            if(M == null)
+            {
+
+            }
+            else
+            {
+                Console.WriteLine("Такой пользователь существует!");
+                MenuUp();
+            }
             Console.WriteLine("Введите роль пользователя");
             var IR = InputRole();
-            var user = new User(N, IR);
+            var user = new User(userName, IR);
             List<User> users = new List<User>();
             users.Add(user);
             fill.FillFileUser(users, true);
-
-
+           
             Dictionary<UserRole, List<string>> groupworkrep = new Dictionary<UserRole, List<string>>();
 
             var groupuser = fill.ReadFileUser();
@@ -617,14 +730,19 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                 }
             }
 
+           
             foreach (var groupwork in groupworkrep)
             {
-                Console.WriteLine("-------------------------");
-                Console.WriteLine(groupwork.Key);
-                Console.WriteLine("-------------------------");
-
-                foreach (var item in groupwork.Value)
+           if (groupwork.Key == user.UserRole)
                 {
+                    Console.WriteLine("-------------------------");
+                    Console.WriteLine(groupwork.Key);
+                    Console.WriteLine("-------------------------");
+                }
+                if (groupwork.Key == user.UserRole)
+                    foreach (var item in groupwork.Value)
+                {
+
                     Console.WriteLine(item);
 
                 }
