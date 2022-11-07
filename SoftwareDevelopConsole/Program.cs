@@ -334,11 +334,11 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
                     if (DateTime.TryParse(Console.ReadLine(), out date))
                         if (date != DateTime.MinValue && date <= DateTime.Now && polzovatel.UserRole == UserRole.Employee)
                         {
-                            AddHourWithControleDate(H, date);
+                            AddHourWithControleDate(polzovatel,H, date);
                         }
                         else if (date != DateTime.MinValue && date <= DateTime.Now && date >= DateTime.Now.Date.AddDays(-2) && polzovatel.UserRole == UserRole.Frelanser)
                         {
-                            AddHourWithControleDate(H, date);
+                            AddHourWithControleDate(polzovatel,H, date);
                         }
                         else
                         {
@@ -357,15 +357,15 @@ namespace SBeregovoy.SoftwareDevelop.SoftwareDevelopConsole
             while ((H <= 0 || H >= 24));
         }
 
-        private static void AddHourWithControleDate(int H, DateTime date)
+        private static void AddHourWithControleDate(User Us, int H, DateTime date)
         {
             Console.WriteLine("Введите сообщение");
             string mas = Console.ReadLine();
 
-            var time = new TimeRecord(date, polzovatel.Name, H, mas);
+            var time = new TimeRecord(date, Us.Name, H, mas);
             List<TimeRecord> times = new List<TimeRecord>();
             times.Add(time);
-            fill.FillFileGeneric(times, (int)polzovatel.UserRole, true);
+            fill.FillFileGeneric(times, (int)Us.UserRole, true);
         }
 
 
@@ -676,15 +676,12 @@ private static void AddWorkerHour()
                     continue;
 
                 }
+                
                 Console.WriteLine("Введите отработанное время");
                 if (Int32.TryParse(Console.ReadLine(), out int H))
                 {
-                    Console.WriteLine("Введите сообщение");
-                    string mas = Console.ReadLine();
-                    var time = new TimeRecord(date, worker.Name, H, mas);
-                    List<TimeRecord> times = new List<TimeRecord>();
-                    times.Add(time);
-                    fill.FillFileGeneric(times, (int)worker.UserRole, true);
+                    
+                    AddHourWithControleDate(worker, H, date);
                 }
                 MenuUp();
             }
