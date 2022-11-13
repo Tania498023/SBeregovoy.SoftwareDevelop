@@ -48,6 +48,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.EnterName = new System.Windows.Forms.Label();
+            this.EnterRole = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -65,6 +67,7 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(48, 22);
             this.textBox2.TabIndex = 1;
+            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // textBox3
             // 
@@ -236,11 +239,31 @@
             this.label6.TabIndex = 31;
             this.label6.Text = "Дата";
             // 
+            // EnterName
+            // 
+            this.EnterName.AutoSize = true;
+            this.EnterName.Location = new System.Drawing.Point(710, 448);
+            this.EnterName.Name = "EnterName";
+            this.EnterName.Size = new System.Drawing.Size(33, 16);
+            this.EnterName.TabIndex = 32;
+            this.EnterName.Text = "Имя";
+            // 
+            // EnterRole
+            // 
+            this.EnterRole.AutoSize = true;
+            this.EnterRole.Location = new System.Drawing.Point(764, 448);
+            this.EnterRole.Name = "EnterRole";
+            this.EnterRole.Size = new System.Drawing.Size(39, 16);
+            this.EnterRole.TabIndex = 33;
+            this.EnterRole.Text = "Роль";
+            // 
             // ManagerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(846, 473);
+            this.Controls.Add(this.EnterRole);
+            this.Controls.Add(this.EnterName);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -294,5 +317,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label EnterName;
+        private System.Windows.Forms.Label EnterRole;
     }
 }

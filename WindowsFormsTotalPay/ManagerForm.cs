@@ -28,6 +28,9 @@ namespace WindowsFormsTotalPay
             InitializeComponent();
             MFroles = roles;
             UserName = name;
+            EnterName.Text = UserName;
+            EnterRole.Text = MFroles;
+           
            
             //добавить лейбл на форму и присвоить ему полученную роль
             if (MFroles == "manager")
@@ -140,7 +143,30 @@ namespace WindowsFormsTotalPay
         private void button1_Click(object sender, EventArgs e)
         {
 
-            string inputName = textBox1.Text;
+            var inputName = textBox1.Text;
+
+            var NameByTbl = new DT();//создали экземпляр класса DT
+            var GetName = NameByTbl.GetIdByName(tableUsers, inputName);//через экземпляр NameByTbl класса DT вызвали метод GetIdByName (обязательно указываем сигнатуру)
+
+            if (GetName != 0)// если метод GetIdByName вернул  не 0 (тип int, так как в сигнатуре второй параметр int), а какое то значение, значит в таблице уже есть вводимое имя
+            {
+                MessageBox.Show("Такой пользователь уже существует!");
+                return;
+            }
+            
+            if (String.IsNullOrEmpty(inputName) || String.IsNullOrWhiteSpace(inputName))
+            {
+                MessageBox.Show("Введите пользователя!");
+            }
+            if (!Int32.TryParse(inputName, out int SS))
+            {
+
+            }
+            else
+            {
+                MessageBox.Show("Имя пользователя не может быть числом!");
+                return;
+            }
 
             var RoleString = comboBoxRole.SelectedItem.ToString().Split(',')[0];
             int RoleUser = Int32.Parse(RoleString);
@@ -151,10 +177,11 @@ namespace WindowsFormsTotalPay
                 return;
             }
             var cmdstring = $"INSERT INTO users ([Name],[IDRole]) VALUES ('{inputName}', '{RoleUser}')";
+
             EcxecSqlCmd(cmdstring);
-
+     
             DialogeCheck();
-
+       
         }
 
         private void EcxecSqlCmd(string cmdstring)
@@ -255,9 +282,36 @@ namespace WindowsFormsTotalPay
 
             //данные из контролов сохраняем в переменные  
             var inputDate = Convert.ToDateTime(dateTimePicker1.Text);//конвертируем тип
-            var inputHour = Convert.ToInt32(textBox2.Text);//конвертируем тип
+            if(inputDate >= DateTime.Now)
+            {
+                MessageBox.Show("Дата не может быть будущим числом!");
+                return;
+            }
+            if(MFroles == "freelanser" && inputDate <= DateTime.Now.Date.AddDays(-2))
+            {
+                MessageBox.Show("Дата не может быть позднее двух дней от текущей даты!");
+                return;
+            }
 
-            string inputMessang = textBox7.Text;
+            var D = textBox2.Text;
+            int inputHour;
+            
+            if (String.IsNullOrEmpty(D)||String.IsNullOrWhiteSpace(D))
+            {
+                MessageBox.Show("Введите количество отработанных часов!");
+            }
+
+            if (Int32.TryParse(D, out inputHour)&& inputHour<24)
+            {
+
+            }   
+            else
+            {
+                MessageBox.Show("Введен неверный формат часов!");
+                return;
+            }
+
+                string inputMessang = textBox7.Text;
 
             if(IDUser == 0)
             {
@@ -325,6 +379,21 @@ namespace WindowsFormsTotalPay
         {
             Environment.Exit(0);
 
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            var TT = (sender as TextBox)?.Text;
+          
+            
+            if (Int32.TryParse(TT, out int value))
+            {
+
+            }
+            else
+            {
+                MessageBox.Show("Введите верный формат отработанных часов!");
+            }
         }
     }
 }
