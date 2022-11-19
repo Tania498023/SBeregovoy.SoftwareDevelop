@@ -32,7 +32,7 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.lbUserNames = new System.Windows.Forms.ListBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
@@ -87,15 +87,15 @@
             this.textBox4.Text = "Отчет по конкретному сотруднику";
             this.textBox4.Visible = false;
             // 
-            // listBox1
+            // lbUserNames
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 16;
-            this.listBox1.Location = new System.Drawing.Point(637, 29);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(151, 68);
-            this.listBox1.TabIndex = 5;
-            this.listBox1.Visible = false;
+            this.lbUserNames.FormattingEnabled = true;
+            this.lbUserNames.ItemHeight = 16;
+            this.lbUserNames.Location = new System.Drawing.Point(637, 29);
+            this.lbUserNames.Name = "lbUserNames";
+            this.lbUserNames.Size = new System.Drawing.Size(151, 68);
+            this.lbUserNames.TabIndex = 5;
+            this.lbUserNames.Visible = false;
             // 
             // button1
             // 
@@ -279,7 +279,7 @@
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.lbUserNames);
             this.Controls.Add(this.textBox4);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.textBox2);
@@ -301,7 +301,7 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox lbUserNames;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;

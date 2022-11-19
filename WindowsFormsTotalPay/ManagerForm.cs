@@ -47,7 +47,7 @@ namespace WindowsFormsTotalPay
                 button2.Visible = true;
                 button3.Visible = true;
                 button4.Visible = true;
-                listBox1.Visible = true;
+                lbUserNames.Visible = true;
                 comboBoxRole.Visible = true;
                 delButton.Visible = true;
 
@@ -87,7 +87,7 @@ namespace WindowsFormsTotalPay
 
                     indexofword++;
                         if(indexofword == 2)
-                            listBox1.Items.Add(summuser);
+                            lbUserNames.Items.Add(summuser);
          
                 }
 
@@ -144,20 +144,6 @@ namespace WindowsFormsTotalPay
         {
 
             var inputName = textBox1.Text;
-
-            var NameByTbl = new DT();//создали экземпляр класса DT
-            var GetName = NameByTbl.GetIdByName(tableUsers, inputName);//через экземпляр NameByTbl класса DT вызвали метод GetIdByName (обязательно указываем сигнатуру)
-
-            if (GetName != 0)// если метод GetIdByName вернул  не 0 (тип int, так как в сигнатуре второй параметр int), а какое то значение, значит в таблице уже есть вводимое имя
-            {
-                MessageBox.Show("Такой пользователь уже существует!");
-                return;
-            }
-            
-            if (String.IsNullOrEmpty(inputName) || String.IsNullOrWhiteSpace(inputName))
-            {
-                MessageBox.Show("Введите пользователя!");
-            }
             if (!Int32.TryParse(inputName, out int SS))
             {
 
@@ -167,15 +153,34 @@ namespace WindowsFormsTotalPay
                 MessageBox.Show("Имя пользователя не может быть числом!");
                 return;
             }
+            if (String.IsNullOrEmpty(inputName) || String.IsNullOrWhiteSpace(inputName))
+            {
+                MessageBox.Show("Введите пользователя!");
+                return;
+            }
 
-            var RoleString = comboBoxRole.SelectedItem.ToString().Split(',')[0];
-            int RoleUser = Int32.Parse(RoleString);
 
             if (comboBoxRole.SelectedItem == null)
             {
                 MessageBox.Show("Роль не выбрана!");
                 return;
             }
+            var NameByTbl = new DT();//создали экземпляр класса DT
+            var GetName = NameByTbl.GetIdByName(tableUsers, inputName);//через экземпляр NameByTbl класса DT вызвали метод GetIdByName (обязательно указываем сигнатуру)
+
+            
+            if (GetName != 0)// если метод GetIdByName вернул  не 0 (тип int, так как в сигнатуре второй параметр int), а какое то значение, значит в таблице уже есть вводимое имя
+            {
+                MessageBox.Show("Такой пользователь уже существует!");
+                return;
+            }
+            
+         
+
+            var RoleString = comboBoxRole.SelectedItem.ToString().Split(',')[0];
+            int RoleUser = Int32.Parse(RoleString);
+
+            
             var cmdstring = $"INSERT INTO users ([Name],[IDRole]) VALUES ('{inputName}', '{RoleUser}')";
 
             EcxecSqlCmd(cmdstring);
@@ -195,7 +200,7 @@ namespace WindowsFormsTotalPay
             int rowAffected = insertCommand.ExecuteNonQuery(); // выполнение команды на вставку
             connection.Close();
 
-            listBox1.Items.Clear();
+            lbUserNames.Items.Clear();
 
             LoadUsers();
         }
@@ -203,7 +208,11 @@ namespace WindowsFormsTotalPay
 
         private void delButton_Click(object sender, EventArgs e)
         {
-            var del = listBox1.SelectedItem.ToString().Split(',')[0];
+            if(lbUserNames == null)
+            {
+                return;
+            }
+            var del = lbUserNames.SelectedItem.ToString().Split(' ')[1];
            
             var cmdstring = $"Delete  users where [Name] = '{del}'";//подготовка запроса
 
@@ -261,12 +270,15 @@ namespace WindowsFormsTotalPay
              */
             int IDUser;
             DT IDnew = new DT();
+            string localUserName = UserName;
 
-            if (MFroles == "manager" && listBox1.SelectedItem != null)
+            if (MFroles == "manager" && lbUserNames.SelectedItem != null)
             {
 
-                var IDString = listBox1.SelectedItem.ToString().Split(' ')[0];//поллучаем ID в виде строки из выбранного элемента listBox1
+                var IDString = lbUserNames.SelectedItem.ToString().Split(' ')[0];//поллучаем ID в виде строки из выбранного элемента listBox1
                 IDUser = Int32.Parse(IDString);
+
+                localUserName = lbUserNames.SelectedItem.ToString().Split(' ')[1];
             }
             else if (MFroles != "manager")
             {
@@ -299,6 +311,7 @@ namespace WindowsFormsTotalPay
             if (String.IsNullOrEmpty(D)||String.IsNullOrWhiteSpace(D))
             {
                 MessageBox.Show("Введите количество отработанных часов!");
+                return;
             }
 
             if (Int32.TryParse(D, out inputHour)&& inputHour<24)
@@ -311,18 +324,76 @@ namespace WindowsFormsTotalPay
                 return;
             }
 
-                string inputMessang = textBox7.Text;
+            var Mes = textBox7.Text;
+           // string inputMessang = ""; 
+            if (String.IsNullOrEmpty(Mes) || String.IsNullOrWhiteSpace(Mes))
+            {
+                MessageBox.Show("Введите содержание работ!");
+                return;
+            }
+            if (!Int32.TryParse(Mes, out int SSS))
+            {
 
-            if(IDUser == 0)
+            }
+            else
+            {
+                MessageBox.Show("Содержание работ не может быть числом!");
+                return;
+            }
+
+            if (IDUser == 0)
             {
                 MessageBox.Show("Пользователь не найден!");
                 return;
             }
+
+           
+
             SqlConnection connection = new SqlConnection(DB.connect); // создание подключения
             connection.Open();
 
-            SqlCommand insertCommand = connection.CreateCommand(); // создание команды на вставку данных
+            SqlCommand insertCommand1 = connection.CreateCommand(); // создание команды на вставку данных
+            insertCommand1.CommandText = $"SELECT [Date],users.[Name] FROM[Beregovoj].[dbo].[Hours] LEFT JOIN users ON Hours.IDName = users.ID " +
+                $" where [Name] = @p1 AND [Date] = @p2";
 
+            DbParameter pio1 = insertCommand1.CreateParameter();
+            pio1.ParameterName = "@p1";
+            pio1.DbType = DbType.String;
+            pio1.Value = localUserName;
+            insertCommand1.Parameters.Add(pio1);
+
+            pio1 = insertCommand1.CreateParameter();
+            pio1.ParameterName = "@p2";
+            pio1.DbType = DbType.DateTime;
+            pio1.Value = inputDate;
+            insertCommand1.Parameters.Add(pio1);
+
+           
+
+            DbDataReader reader = insertCommand1.ExecuteReader();
+            string value = null;
+            while (reader.Read())
+            {
+                
+                if(!reader.IsDBNull(0))
+                {
+                    value = reader.GetDateTime(0).ToString();
+                }
+            
+            }
+          reader.Close();
+
+        
+          
+
+            if(value != null)
+            {
+                MessageBox.Show("Запись по данному пользователю в указанную дату уже введена!");
+                connection.Close();
+                return;
+            }
+
+            SqlCommand insertCommand = connection.CreateCommand();
             insertCommand.CommandText = $"INSERT INTO Hours ([Date],[Hours],[Messang],[IDName]) VALUES ( @p1, @p2, @p3, @p4 )";//создаем запрос на вставку данных
             
             //подготовка данных для SQL сервера
@@ -341,7 +412,7 @@ namespace WindowsFormsTotalPay
             pio = insertCommand.CreateParameter();
             pio.ParameterName = "@p3";
             pio.DbType = DbType.String;
-            pio.Value = inputMessang;
+            pio.Value = Mes;
             insertCommand.Parameters.Add(pio);
 
             pio = insertCommand.CreateParameter();
