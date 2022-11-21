@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.lbUserNames = new System.Windows.Forms.ListBox();
+            this.EnterRoles = new System.Windows.Forms.Label();
+            this.EnterUsers = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -54,10 +58,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.label8 = new System.Windows.Forms.Label();
-            this.EnterRoles = new System.Windows.Forms.Label();
-            this.EnterUsers = new System.Windows.Forms.Label();
-            this.lbUserNames = new System.Windows.Forms.ListBox();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -87,6 +87,43 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // lbUserNames
+            // 
+            this.lbUserNames.FormattingEnabled = true;
+            this.lbUserNames.ItemHeight = 16;
+            this.lbUserNames.Location = new System.Drawing.Point(16, 121);
+            this.lbUserNames.Name = "lbUserNames";
+            this.lbUserNames.Size = new System.Drawing.Size(120, 84);
+            this.lbUserNames.TabIndex = 38;
+            // 
+            // EnterRoles
+            // 
+            this.EnterRoles.AutoSize = true;
+            this.EnterRoles.Location = new System.Drawing.Point(704, 406);
+            this.EnterRoles.Name = "EnterRoles";
+            this.EnterRoles.Size = new System.Drawing.Size(39, 16);
+            this.EnterRoles.TabIndex = 37;
+            this.EnterRoles.Text = "Роль";
+            // 
+            // EnterUsers
+            // 
+            this.EnterUsers.AutoSize = true;
+            this.EnterUsers.Location = new System.Drawing.Point(650, 406);
+            this.EnterUsers.Name = "EnterUsers";
+            this.EnterUsers.Size = new System.Drawing.Size(33, 16);
+            this.EnterUsers.TabIndex = 36;
+            this.EnterUsers.Text = "Имя";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(13, 102);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(159, 16);
+            this.label8.TabIndex = 35;
+            this.label8.Text = "Список пользователей";
+            this.label8.Visible = false;
             // 
             // textBox3
             // 
@@ -332,51 +369,14 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(846, 473);
             this.tabControl1.TabIndex = 34;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(13, 102);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(159, 16);
-            this.label8.TabIndex = 35;
-            this.label8.Text = "Список пользователей";
-            this.label8.Visible = false;
-            // 
-            // EnterRoles
-            // 
-            this.EnterRoles.AutoSize = true;
-            this.EnterRoles.Location = new System.Drawing.Point(704, 406);
-            this.EnterRoles.Name = "EnterRoles";
-            this.EnterRoles.Size = new System.Drawing.Size(39, 16);
-            this.EnterRoles.TabIndex = 37;
-            this.EnterRoles.Text = "Роль";
-            // 
-            // EnterUsers
-            // 
-            this.EnterUsers.AutoSize = true;
-            this.EnterUsers.Location = new System.Drawing.Point(650, 406);
-            this.EnterUsers.Name = "EnterUsers";
-            this.EnterUsers.Size = new System.Drawing.Size(33, 16);
-            this.EnterUsers.TabIndex = 36;
-            this.EnterUsers.Text = "Имя";
-            // 
-            // lbUserNames
-            // 
-            this.lbUserNames.FormattingEnabled = true;
-            this.lbUserNames.ItemHeight = 16;
-            this.lbUserNames.Location = new System.Drawing.Point(16, 121);
-            this.lbUserNames.Name = "lbUserNames";
-            this.lbUserNames.Size = new System.Drawing.Size(120, 84);
-            this.lbUserNames.TabIndex = 38;
             // 
             // ManagerForm
             // 
