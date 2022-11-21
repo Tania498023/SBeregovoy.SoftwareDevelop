@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -30,8 +31,9 @@ namespace WindowsFormsTotalPay
             UserName = name;
             EnterName.Text = UserName;
             EnterRole.Text = MFroles;
-           
-           
+            EnterUsers.Text = UserName;
+            EnterRoles.Text = MFroles;
+
             //добавить лейбл на форму и присвоить ему полученную роль
             if (MFroles == "manager")
             {
@@ -50,6 +52,9 @@ namespace WindowsFormsTotalPay
                 lbUserNames.Visible = true;
                 comboBoxRole.Visible = true;
                 delButton.Visible = true;
+                comboxPolzovatelName.Visible = true;
+                label7.Visible = true;
+
 
                 LoadRole();
             }
@@ -66,10 +71,12 @@ namespace WindowsFormsTotalPay
 
 
        
-        private  void LoadUsers()//загружаем имя пользователя(usera) в listBox1
+        private  void LoadUsers()//загружаем имя пользователя(usera) в lbUserName
         {
             string cmd = $"SELECT users.[ID],[Name],[Role] FROM [Beregovoj].[dbo].[UserRole] Right JOIN users ON users.IDRole = [UserRole].ID ";
 
+
+            tableUsers.Clear();
             FeelTables(ref tableUsers, cmd);
 
             foreach (DataRow row in tableUsers.Rows)//в первом цикле это первая строка
@@ -86,9 +93,12 @@ namespace WindowsFormsTotalPay
                     summuser += Usr + " ";
 
                     indexofword++;
-                        if(indexofword == 2)
-                            lbUserNames.Items.Add(summuser);
-         
+                    if (indexofword == 2)
+                    {
+                        lbUserNames.Items.Add(summuser);
+                        comboxPolzovatelName.Items.Add(summuser);
+                    }
+
                 }
 
             }
@@ -201,14 +211,14 @@ namespace WindowsFormsTotalPay
             connection.Close();
 
             lbUserNames.Items.Clear();
-
+            comboxPolzovatelName.Items.Clear();
             LoadUsers();
         }
 
 
         private void delButton_Click(object sender, EventArgs e)
         {
-            if(lbUserNames == null)
+            if(lbUserNames == null || lbUserNames.SelectedItem == null)
             {
                 return;
             }
@@ -272,13 +282,13 @@ namespace WindowsFormsTotalPay
             DT IDnew = new DT();
             string localUserName = UserName;
 
-            if (MFroles == "manager" && lbUserNames.SelectedItem != null)
+            if (MFroles == "manager" && comboxPolzovatelName.SelectedItem != null)
             {
 
-                var IDString = lbUserNames.SelectedItem.ToString().Split(' ')[0];//поллучаем ID в виде строки из выбранного элемента listBox1
+                var IDString = comboxPolzovatelName.SelectedItem.ToString().Split(' ')[0];//поллучаем ID в виде строки из выбранного элемента listBox1
                 IDUser = Int32.Parse(IDString);
 
-                localUserName = lbUserNames.SelectedItem.ToString().Split(' ')[1];
+                localUserName = comboxPolzovatelName.SelectedItem.ToString().Split(' ')[1];
             }
             else if (MFroles != "manager")
             {
